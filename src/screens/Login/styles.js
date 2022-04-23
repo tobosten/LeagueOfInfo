@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { theme } from "../theme";
+import { theme } from "../../theme";
 
 const styles = StyleSheet.create({
     titleContainer: {
@@ -29,10 +29,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         borderRadius: 5,
         marginTop: 30
-    },
-    searchImage: {
-        height: 30,
-        width: 30,
     }
 })
 
