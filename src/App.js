@@ -16,7 +16,7 @@ export default function App() {
   return (
     <ProjectContext>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='ChampDetails'>
+        <Stack.Navigator initialRouteName='Login'>
           <Stack.Screen name="Login" component={LoginScreen}
             options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" } }} />
           <Stack.Screen name="ChampSearch" component={ChampSearch}
