@@ -30,6 +30,10 @@ const styles = StyleSheet.create({
         height: 70,
         width: 70,
         backgroundColor: "gray"
+    },
+    renderItemImage: {
+        height: 60,
+        width: 60
     }
 })
 

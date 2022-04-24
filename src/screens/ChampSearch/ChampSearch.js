@@ -55,7 +55,7 @@ const ChampSearch = ({ navigation }) => {
                     })
                 }}>
                     <Image
-                        source={ChampionImages.Aatrox}  /* ${item.id}  not working?*/
+                        source={ChampionImages[item.id]}  /* ${item.id}  not working?*/
                         style={styles.renderItemImage}
                     />
                 </TouchableOpacity>
