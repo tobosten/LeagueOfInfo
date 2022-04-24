@@ -20,16 +20,6 @@ const ChampSearch = ({ navigation }) => {
 
     const { champArray, setChampArray } = useContext(ChampArrayContext)
 
-    const testArray = [
-        { id: "Aatrox" },
-        { id: "Kalista" },
-        { id: "Akali" },
-        { id: "Evelynn" },
-        { id: "Rek'sai" },
-        { id: "Bel'veth" },
-        { id: "Kai'sa" }
-    ]
-
     useEffect(async () => {
         /* console.log(champArray); */
         await axios.get(`http://ddragon.leagueoflegends.com/cdn/12.6.1/data/en_US/champion.json`)

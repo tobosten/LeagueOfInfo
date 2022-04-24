@@ -17,11 +17,10 @@ const ChampDetails = ({ route, navigation }) => {
     let champName = "Jhin"
     /* const { champName, champId } = route.params */
     const [loading, setLoading] = useState(true)
-    const [champImage, setChampImage] = useState(null)
     const [champJson, setChampJson] = useState(Object)
-    const [champSpells, setChampSpells] = useState({})
-    const [spellImages, setSpellImages] = useState([])
     let buttonArray = ["Q", "W", "E", "R", "P"]
+    const [selectedSpell, setSelectedSpell] = useState(0)
+    const [spellInformation, setSpellInformation] = useState([])
 
 
     useEffect(() => {
@@ -30,40 +29,67 @@ const ChampDetails = ({ route, navigation }) => {
                 /* console.log(resp.data.data.Jhin); */
                 let champObject = resp.data.data
                 setChampJson(resp.data.data)
-                setChampSpells([
-                    champObject[champName].spells[0].name,
-                    champObject[champName].spells[1].name,
-                    champObject[champName].spells[2].name,
-                    champObject[champName].spells[3].name,
-                    champObject[champName].passive.name
-                ])
-                setSpellImages([
-                    champObject[champName].spells[0].image.full,
-                    champObject[champName].spells[1].image.full,
-                    champObject[champName].spells[2].image.full,
-                    champObject[champName].spells[3].image.full,
-                    champObject[champName].passive.image.full,
+                setSpellInformation([
+                    {
+                        image: champObject[champName].spells[0].image.full,
+                        name: champObject[champName].spells[0].name,
+                        cooldown: champObject[champName].spells[0].cooldownBurn,
+                        cost: champObject[champName].spells[0].costBurn,
+                        range: champObject[champName].spells[0].rangeBurn,
+                        description: champObject[champName].spells[0].description
+                    }, {
+                        image: champObject[champName].spells[1].image.full,
+                        name: champObject[champName].spells[1].name,
+                        cooldown: champObject[champName].spells[1].cooldownBurn,
+                        cost: champObject[champName].spells[1].costBurn,
+                        range: champObject[champName].spells[1].rangeBurn,
+                        description: champObject[champName].spells[1].description
+                    }, {
+                        image: champObject[champName].spells[2].image.full,
+                        name: champObject[champName].spells[2].name,
+                        cooldown: champObject[champName].spells[2].cooldownBurn,
+                        cost: champObject[champName].spells[2].costBurn,
+                        range: champObject[champName].spells[2].rangeBurn,
+                        description: champObject[champName].spells[2].description
+                    }, {
+                        image: champObject[champName].spells[3].image.full,
+                        name: champObject[champName].spells[3].name,
+                        cooldown: champObject[champName].spells[3].cooldownBurn,
+                        cost: champObject[champName].spells[3].costBurn,
+                        range: champObject[champName].spells[3].rangeBurn,
+                        description: champObject[champName].spells[3].description
+                    },
+                    {
+                        image: champObject[champName].passive.image.full,
+                        name: champObject[champName].passive.name,
+                        description: champObject[champName].passive.description
+                    },
                 ])
 
             }).then(() => {
                 setTimeout(() => {
                     setLoading(false)
-                    /* console.log("Champ info: ", champJson[champName].id) */
-                    /* console.log(champSpells); */
                 }, 500)
 
             })
     }, [])
 
+
     const abilityRenderItem = ({ item, index }) => {
-        let uri = `http://ddragon.leagueoflegends.com/cdn/12.5.1/img/spell/${item}`
-        if (index == 4) { uri = `http://ddragon.leagueoflegends.com/cdn/12.5.1/img/passive/${item}` }
+        let uri = `http://ddragon.leagueoflegends.com/cdn/12.5.1/img/spell/${item.image}`
+        if (index == 4) { uri = `http://ddragon.leagueoflegends.com/cdn/12.5.1/img/passive/${item.image}` }
         return (
             <View style={styles.abilityView}>
                 <View style={{}}>
-                    <Text style={styles.abilityText}>{champSpells[index]}</Text>
+                    <Text style={styles.abilityText}>{spellInformation[index].name}</Text>
                 </View>
-                <TouchableOpacity style={{ borderWidth: 3, borderColor: theme.mediumBlue, borderRadius: 10, }}>
+                <TouchableOpacity style={{ borderWidth: 3, borderColor: theme.mediumBlue, borderRadius: 10, }}
+                    onPress={() => {
+                        setSelectedSpell(index)
+                        //not updating in time to show ability
+                        console.log(index, item)
+                    }}
+                >
                     <ImageBackground
                         source={{ uri: uri }}
                         style={styles.abilityImage}
@@ -73,6 +99,44 @@ const ChampDetails = ({ route, navigation }) => {
                         </View>
                     </ImageBackground>
                 </TouchableOpacity>
+            </View>
+        )
+    }
+
+    function selectedSpellView() {
+
+        return (
+            <View style={{
+                padding: 15,
+                backgroundColor: theme.mediumBlue,
+                width: "100%",
+                alignSelf: "center",
+                marginVertical: 15,
+                borderRadius: 5
+            }}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <View style={{ borderWidth: 2, borderColor: theme.orange, borderRadius: 10 }}>
+                        <Image
+                            /* passive image unable to be displayed */
+                            source={{ uri: `http://ddragon.leagueoflegends.com/cdn/12.5.1/img/spell/${spellInformation[selectedSpell].image}` }}
+                            style={{ height: 70, width: 70 }}
+                        />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                        <Text style={{ color: "white", fontSize: 18, margin: 10, textAlign: "center" }}>{spellInformation[selectedSpell].name}</Text>
+                    </View>
+                </View>
+                <View style={{ marginHorizontal: 5, marginTop: 10 }}> 
+                {/* Check if fields exists before displaying */}
+                    <Text style={styles.baseStatsText}>Cooldown: {spellInformation[selectedSpell].cooldown} s</Text>
+                    <Text style={styles.baseStatsText}>Cost: {spellInformation[selectedSpell].cost} mana</Text>
+                    <Text style={styles.baseStatsText}>Range: {spellInformation[selectedSpell].range}</Text>
+                    <View style={{ marginTop: 15 }}>
+                        <Text style={{ color: "white", fontSize: 16 }}>Description</Text>
+                        <Text style={styles.baseStatsText}>{spellInformation[selectedSpell].description}</Text>
+                    </View>
+
+                </View>
             </View>
         )
     }
@@ -89,8 +153,7 @@ const ChampDetails = ({ route, navigation }) => {
                 </View>
             ) : (
                 <View contentContainerStyle={{ flexGrow: 1 }}>
-
-                    <View style={{ /* borderWidth: 1, */ width: "90%", alignSelf: "center", marginTop: 20, flexDirection: "row" }}>
+                    <View style={{ width: "90%", alignSelf: "center", marginTop: 20, flexDirection: "row" }}>
                         <View style={{ flex: 1 }}>
                             <Image
                                 source={{ uri: `http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champName}_0.jpg` }}
@@ -106,38 +169,87 @@ const ChampDetails = ({ route, navigation }) => {
                             </View>
                         </View>
                     </View>
-                    <View style={{ width: "90%", alignSelf: "center", marginTop: 40 }}>
-                        <Text style={{ color: "white", fontSize: 24, marginLeft: 10, marginBottom: 10 }}>Lore</Text>
-                        <View style={{ backgroundColor: theme.mediumBlue, borderRadius: 5, padding: 15, alignItems: "center" }} >
+                    <View style={styles.loreMainContainer}>
+                        <View style={styles.loreContainer}>
+                            <Text style={styles.loreTitle}>Lore</Text>
                             <Text style={{ color: "white" }}>{champJson[champName].lore}</Text>
                         </View>
                     </View>
-                    <View style={{ width: "90%", alignSelf: "center", marginTop: 20 }}>
+                    <View style={{ width: "90%", alignSelf: "center", marginTop: 20, marginBottom: 20 }}>
                         <View style={styles.mainAbilityContainer}>
                             <Text style={{ color: "white", marginBottom: 10, fontSize: 24 }}>Abilities</Text>
                             <View style={styles.abilitiesContainer}>
                                 <FlatList
-                                    data={Object.values(spellImages)}
+                                    data={Object.values(spellInformation)}
                                     renderItem={abilityRenderItem}
                                     keyExtractor={(item, index) => index}
                                     numColumns={3}
-                                />{/* 
-                                <VirtualizedList
-                                    data={Object.values(spellImages)}
-                                    renderItem={abilityRenderItem}
-                                    getItem={(data, index) => data[index]}
-                                    getItemCount={data => data.length}
-                                    keyExtractor={(item, index) => index}
-                                /> */}
+                                />
 
+                            </View>
+
+                        </View>
+                        {selectedSpellView()}
+                        <View style={styles.baseStatsContainer}>
+                            <Text style={styles.baseStatsTitle}>Base Stats</Text>
+                            <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 5 }}>
+                                <View style={{ flex: 1, marginLeft: 3 }}>
+                                    <Text style={styles.baseStatsText}>
+                                        Health: {champJson[champName].stats.hp} - {champJson[champName].stats.hp + (champJson[champName].stats.hpperlevel * 18)}
+                                    </Text>
+                                    <Text style={styles.baseStatsText}>
+                                        Mana: {champJson[champName].stats.mp} - {champJson[champName].stats.mp + (champJson[champName].stats.mpperlevel * 18)}
+                                    </Text>
+                                    <Text style={styles.baseStatsText}>
+                                        Armor: {champJson[champName].stats.armor} - {champJson[champName].stats.armor + (champJson[champName].stats.armorperlevel * 18)}
+                                    </Text>
+                                    <Text style={styles.baseStatsText}>
+                                        Move. speed: {champJson[champName].stats.movespeed}
+                                    </Text >
+
+                                </View>
+                                <View style={{ width: 15 }} />
+                                <View style={{ flex: 1, marginLeft: 3 }}>
+                                    <Text style={styles.baseStatsText}>
+                                        Health regen: {champJson[champName].stats.hpregen} - {champJson[champName].stats.hpregen + (champJson[champName].stats.hpregenperlevel * 18)}
+                                    </Text>
+                                    <Text style={styles.baseStatsText}>
+                                        Mana regen: {champJson[champName].stats.mpregen} - {champJson[champName].stats.mpregen + (champJson[champName].stats.mpregenperlevel * 18)}
+                                    </Text>
+                                    <Text style={styles.baseStatsText}>
+                                        Magic Resist: {champJson[champName].stats.spellblock} - {champJson[champName].stats.spellblock + (champJson[champName].stats.spellblockperlevel * 18)}
+                                    </Text>
+
+                                </View>
+                            </View>
+                            <Text style={[styles.baseStatsTitle, { fontSize: 18, marginTop: 10 }]}>Attack stats</Text>
+                            <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 5 }}>
+                                <View style={{ flex: 1, marginLeft: 3 }}>
+                                    <Text style={styles.baseStatsText}>
+                                        AD: {champJson[champName].stats.attackdamage} - {Math.round(champJson[champName].stats.attackdamage + (champJson[champName].stats.attackdamageperlevel * 18))}
+                                    </Text>
+                                    <Text style={styles.baseStatsText}>
+                                        Attack range: {champJson[champName].stats.attackrange}
+                                    </Text >
+
+
+                                </View>
+                                <View style={{ width: 15 }} />
+                                <View style={{ flex: 1 }}>
+                                    <Text style={styles.baseStatsText}>
+                                        AD growth: {champJson[champName].stats.hpregen} - {champJson[champName].stats.hpregen + (champJson[champName].stats.hpregenperlevel * 18)}
+                                    </Text>
+                                    <Text style={styles.baseStatsText}>
+                                        Attack speed: {champJson[champName].stats.attackspeed}
+                                    </Text>
+                                </View>
                             </View>
                         </View>
                     </View>
-
                 </View>
             )
             }
-        </ScrollView>
+        </ScrollView >
     )
 }
 
