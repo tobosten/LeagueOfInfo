@@ -29,11 +29,7 @@ const styles = StyleSheet.create({
     abilityImage: {
         height: 70,
         width: 70,
-        backgroundColor: "gray"
-    },
-    renderItemImage: {
-        height: 60,
-        width: 60
+        backgroundColor: "gray",
     }
 })
 
