@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: 'center',
         marginHorizontal: 10,
+        marginVertical: 10
     },
     abilityText: {
         color: "white",
@@ -71,6 +72,17 @@ const styles = StyleSheet.create({
     baseStatsText: {
         color: "white",
         marginVertical: 1,
+    },
+    shadow: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+
+        elevation: 5,
     }
 })
 

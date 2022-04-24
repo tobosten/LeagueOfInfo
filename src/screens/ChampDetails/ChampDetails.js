@@ -19,7 +19,7 @@ const ChampDetails = ({ route, navigation }) => {
     const [loading, setLoading] = useState(true)
     const [champJson, setChampJson] = useState(Object)
     let buttonArray = ["Q", "W", "E", "R", "P"]
-    const [selectedSpell, setSelectedSpell] = useState(0)
+    const [selectedSpellIndex, setSelectedSpellIndex] = useState(0)
     const [spellInformation, setSpellInformation] = useState([])
 
 
@@ -80,12 +80,9 @@ const ChampDetails = ({ route, navigation }) => {
         if (index == 4) { uri = `http://ddragon.leagueoflegends.com/cdn/12.5.1/img/passive/${item.image}` }
         return (
             <View style={styles.abilityView}>
-                <View style={{}}>
-                    <Text style={styles.abilityText}>{spellInformation[index].name}</Text>
-                </View>
-                <TouchableOpacity style={{ borderWidth: 3, borderColor: theme.mediumBlue, borderRadius: 10, }}
+                <TouchableOpacity style={[{ borderWidth: 3, borderColor: theme.mediumBlue, borderRadius: 10 }, styles.shadow]}
                     onPress={() => {
-                        setSelectedSpell(index)
+                        setSelectedSpellIndex(index)
                         //not updating in time to show ability
                         console.log(index, item)
                     }}
@@ -99,6 +96,10 @@ const ChampDetails = ({ route, navigation }) => {
                         </View>
                     </ImageBackground>
                 </TouchableOpacity>
+
+                <View style={{}}>
+                    <Text style={styles.abilityText}>{spellInformation[index].name}</Text>
+                </View>
             </View>
         )
     }
@@ -115,25 +116,25 @@ const ChampDetails = ({ route, navigation }) => {
                 borderRadius: 5
             }}>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <View style={{ borderWidth: 2, borderColor: theme.orange, borderRadius: 10 }}>
+                    <View style={styles.shadow}>
                         <Image
                             /* passive image unable to be displayed */
-                            source={{ uri: `http://ddragon.leagueoflegends.com/cdn/12.5.1/img/spell/${spellInformation[selectedSpell].image}` }}
+                            source={{ uri: `http://ddragon.leagueoflegends.com/cdn/12.5.1/img/spell/${spellInformation[selectedSpellIndex].image}` }}
                             style={{ height: 70, width: 70 }}
                         />
                     </View>
                     <View style={{ flex: 1 }}>
-                        <Text style={{ color: "white", fontSize: 18, margin: 10, textAlign: "center" }}>{spellInformation[selectedSpell].name}</Text>
+                        <Text style={{ color: "white", fontSize: 18, margin: 10, textAlign: "center" }}>{spellInformation[selectedSpellIndex].name}</Text>
                     </View>
                 </View>
-                <View style={{ marginHorizontal: 5, marginTop: 10 }}> 
-                {/* Check if fields exists before displaying */}
-                    <Text style={styles.baseStatsText}>Cooldown: {spellInformation[selectedSpell].cooldown} s</Text>
-                    <Text style={styles.baseStatsText}>Cost: {spellInformation[selectedSpell].cost} mana</Text>
-                    <Text style={styles.baseStatsText}>Range: {spellInformation[selectedSpell].range}</Text>
+                <View style={{ marginHorizontal: 5, marginTop: 10 }}>
+                    {/* Check if fields exists before displaying */}
+                    <Text style={styles.baseStatsText}>Cooldown: {spellInformation[selectedSpellIndex].cooldown} s</Text>
+                    <Text style={styles.baseStatsText}>Cost: {spellInformation[selectedSpellIndex].cost} mana</Text>
+                    <Text style={styles.baseStatsText}>Range: {spellInformation[selectedSpellIndex].range}</Text>
                     <View style={{ marginTop: 15 }}>
                         <Text style={{ color: "white", fontSize: 16 }}>Description</Text>
-                        <Text style={styles.baseStatsText}>{spellInformation[selectedSpell].description}</Text>
+                        <Text style={styles.baseStatsText}>{spellInformation[selectedSpellIndex].description}</Text>
                     </View>
 
                 </View>
