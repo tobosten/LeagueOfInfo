@@ -197,10 +197,7 @@ const ChampDetails = ({ route, navigation }) => {
     }
 
     function checkMasteryTitle() {
-       /*  console.log(champJson[champName].tags[0])
-        console.log(champMastery.championLevel); */
-        let masteryTitle = constants.masteryTitles[champMastery.championLevel - 1][champJson[champName].tags[0]]
-        console.log();    
+        let masteryTitle = constants.masteryTitles[champMastery.championLevel >= 1 ? champMastery.championLevel : 0][champJson[champName].tags[0]]
         return <Text style={{ color: theme.white, fontSize: 18 }}>{masteryTitle}</Text>
     }
 

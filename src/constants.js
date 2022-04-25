@@ -5,6 +5,14 @@ export const constants = {
 
     masteryTitles: [
         {
+            Assassin: "Mastery",
+            Fighter: "Mastery",
+            Mage: "Mastery",
+            Marksman: "Mastery",
+            Support: "Mastery",
+            Tank: "Mastery",
+        },
+        {
             Assassin: "Rogue",
             Fighter: "Scrapper",
             Mage: "Initiate",
