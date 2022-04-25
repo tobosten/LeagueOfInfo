@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { theme } from './theme';
 import ProjectContext from './ProjectContext';
+import { ToastProvider } from 'react-native-toast-notifications'
 //screens
 import LoginScreen from './screens/Login/LoginScreen';
 import ChampSearch from './screens/ChampSearch/ChampSearch';
@@ -16,16 +17,22 @@ const Stack = createNativeStackNavigator()
 export default function App() {
   return (
     <ProjectContext>
-      <NavigationContainer>
-        <Stack.Navigator /* initialRouteName='ChampDetails' */>
-          <Stack.Screen name="Login" component={LoginScreen}
-            options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" } }} />
-          <Stack.Screen name="ChampSearch" component={ChampSearch}
-            options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" }, headerTitle: "Champion Search" }} />
-          <Stack.Screen name="ChampDetails" component={ChampDetails}
-            options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" }, headerTitle: "Champion Search" }} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <ToastProvider
+        placement='bottom'
+        duration={1500}
+        normalColor={theme.orange}
+      >
+        <NavigationContainer>
+          <Stack.Navigator /* initialRouteName='ChampDetails' */>
+            <Stack.Screen name="Login" component={LoginScreen}
+              options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" } }} />
+            <Stack.Screen name="ChampSearch" component={ChampSearch}
+              options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" }, headerTitle: "Champion Search" }} />
+            <Stack.Screen name="ChampDetails" component={ChampDetails}
+              options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" }, headerTitle: "Champion Search" }} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ToastProvider>
     </ProjectContext>
   );
 }

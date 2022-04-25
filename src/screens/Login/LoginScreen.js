@@ -5,11 +5,13 @@ import { theme } from '../../theme'
 import styles from './styles'
 import { UserInfoContext, MasteryArrayContext } from '../../ProjectContext'
 import { constants } from '../../constants'
+import { useToast } from 'react-native-toast-notifications'
 
 
 const LoginScreen = ({ navigation }) => {
 
-    const [sumName, setSumName] = useState("Ezuyi")
+    const toast = useToast()
+    const [sumName, setSumName] = useState("")
     const [loading, setLoading] = useState(false)
     const { userInfo, setUserInfo } = useContext(UserInfoContext)
     const { setMasteryArray } = useContext(MasteryArrayContext)
@@ -19,29 +21,36 @@ const LoginScreen = ({ navigation }) => {
         /* "https://euw1.api.riotgames.com//lol/champion-mastery/v4/champion-masteries/by-summoner/{encryptedSummonerId}/by-champion/{championId}?api_key={apiKey}" */
 
         /* https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summonerName}?api_key={apiKey} */
-        axios.get(`https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${sumName}${constants.api_key}`)
-            .then((resp) => {
-                console.log(resp.data);
-                let id = resp.data.id
-                setUserInfo(
-                    {
-                        accoundId: resp.data.accountId,
-                        id: resp.data.id,
-                        name: resp.data.name,
-                        profileIconId: resp.data.profileiconId,
-                        puuid: resp.data.puuid,
-                        summonerLevel: resp.data.summonerLevel
-                    }
-                )
-                axios.get(
-                    `https://euw1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${id}${constants.api_key}`
-                ).then((resp) => {
-                    /* console.log("Mastery: ", resp.data); */
-                    setMasteryArray(resp.data)
-                    setSumName("")
-                    navigation.navigate("ChampSearch")
+        if (sumName !== "") {
+            axios.get(`https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${sumName}${constants.api_key}`)
+                .then((resp) => {
+                    console.log(resp.data);
+                    let id = resp.data.id
+                    setUserInfo(
+                        {
+                            accoundId: resp.data.accountId,
+                            id: resp.data.id,
+                            name: resp.data.name,
+                            profileIconId: resp.data.profileiconId,
+                            puuid: resp.data.puuid,
+                            summonerLevel: resp.data.summonerLevel
+                        }
+                    )
+                    axios.get(
+                        `https://euw1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${id}${constants.api_key}`
+                    ).then((resp) => {
+                        /* console.log("Mastery: ", resp.data); */
+                        setMasteryArray(resp.data)
+                        setSumName("")
+                        navigation.navigate("ChampSearch")
+                    })
+                }).catch(() => {
+                    toast.show("No summoner by that name")
                 })
-            })
+        } else {
+            toast.show("Requires summoner name")
+        }
+
 
     }
 
@@ -50,7 +59,7 @@ const LoginScreen = ({ navigation }) => {
     return (
         <View style={{ flex: 1, backgroundColor: theme.darkBlue }}>
             {/* choose which region? */}
-            <Text style={{ color: "white" }}> Only EUW</Text>
+            <Text style={{ color: "white", marginLeft: 10 }}>EUW</Text>
             <View style={styles.titleContainer}>
                 <Text style={{ color: "white", fontSize: 30 }}>League of Info</Text>
             </View>
