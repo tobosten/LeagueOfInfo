@@ -5,3 +5,8 @@ git commit -m "first commit"
 git branch -M main
 git remote add origin https://github.com/Erizium/examRep.git
 git push -u origin main
+
+
+TODO: 
+    Check if field exists, like cd and mana on ability.
+    

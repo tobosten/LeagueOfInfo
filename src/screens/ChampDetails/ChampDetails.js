@@ -119,7 +119,10 @@ const ChampDetails = ({ route, navigation }) => {
                     <View style={styles.shadow}>
                         <Image
                             /* passive image unable to be displayed */
-                            source={{ uri: `http://ddragon.leagueoflegends.com/cdn/12.5.1/img/spell/${spellInformation[selectedSpellIndex].image}` }}
+                            source={selectedSpellIndex > 3 ?
+                                { uri: `http://ddragon.leagueoflegends.com/cdn/12.5.1/img/passive/${spellInformation[selectedSpellIndex].image}` }
+                                :
+                                { uri: `http://ddragon.leagueoflegends.com/cdn/12.5.1/img/spell/${spellInformation[selectedSpellIndex].image}` }}
                             style={{ height: 70, width: 70 }}
                         />
                     </View>
@@ -157,6 +160,7 @@ const ChampDetails = ({ route, navigation }) => {
                     <View style={{ width: "90%", alignSelf: "center", marginTop: 20, flexDirection: "row" }}>
                         <View style={{ flex: 1 }}>
                             <Image
+                                /* source={{ uri: `http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champName}_0.jpg` }} */
                                 source={{ uri: `http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champName}_0.jpg` }}
                                 style={{ height: height, width: width, borderRadius: 5 }}
                             />
