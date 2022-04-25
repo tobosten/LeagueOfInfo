@@ -8,5 +8,11 @@ git push -u origin main
 
 
 TODO: 
-    Check if field exists, like cd and mana on ability.
+    SelectedAbility:
+        Check if field exists like cd, cost and range etc.
+    Add mastery icon and points in ChampDetails.
     
+
+Endpoints: 
+    ProfileIcon: http://ddragon.leagueoflegends.com/cdn/12.7.1/img/profileicon/685.png
+    IconArray: http://ddragon.leagueoflegends.com/cdn/12.7.1/data/en_US/profileicon.json

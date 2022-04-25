@@ -2,10 +2,13 @@ import {
     View, Text, ActivityIndicator, Image, ScrollView, TouchableOpacity, ImageBackground,
     FlatList, VirtualizedList, SafeAreaView, LogBox
 } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { theme } from '../../theme'
 import axios from 'axios'
 import styles from './styles'
+import { UserInfoContext, MasteryArrayContext } from '../../ProjectContext'
+import { constants } from '../../constants'
+import { MasteryImages } from '../../assets/MasteryImages'
 
 const ChampDetails = ({ route, navigation }) => {
 
@@ -14,13 +17,17 @@ const ChampDetails = ({ route, navigation }) => {
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
     }, [])
 
-    let champName = "Jhin"
-    /* const { champName, champId } = route.params */
+    /* let champName = "Syndra" */
+    const { champName, champId } = route.params
     const [loading, setLoading] = useState(true)
     const [champJson, setChampJson] = useState(Object)
     let buttonArray = ["Q", "W", "E", "R", "P"]
     const [selectedSpellIndex, setSelectedSpellIndex] = useState(0)
     const [spellInformation, setSpellInformation] = useState([])
+    const [champMastery, setChampMastery] = useState({})
+    const { userInfo } = useContext(UserInfoContext)
+    const { masteryArray } = useContext(MasteryArrayContext)
+
 
 
     useEffect(() => {
@@ -66,13 +73,27 @@ const ChampDetails = ({ route, navigation }) => {
                     },
                 ])
 
+                /* console.log(masteryArray) */
+                masteryArray.forEach((value) => {
+                    if (champObject[champName].key == value.championId) {
+
+                        setChampMastery({
+                            championId: value.championId,
+                            championLevel: value.championLevel,
+                            championPoints: value.championPoints,
+                            chestGranted: value.chestGranted
+                        })
+                    }
+                })
+
             }).then(() => {
                 setTimeout(() => {
                     setLoading(false)
-                }, 500)
-
+                }, 200)
             })
     }, [])
+
+
 
 
     const abilityRenderItem = ({ item, index }) => {
@@ -91,8 +112,12 @@ const ChampDetails = ({ route, navigation }) => {
                         source={{ uri: uri }}
                         style={styles.abilityImage}
                     >
-                        <View>
-                            <Text style={{ color: "white", marginLeft: 5 }}>{buttonArray[index]}</Text>
+                        <View style={{ backgroundColor: theme.darkBlue, width: 15, heigth: 15, margin: 3, borderRadius: 2, borderWidth: .5, borderColor: theme.white }}>
+                            <Text style={{
+                                color: theme.white,
+                                textAlign: "center",
+                                fontSize: 12
+                            }}>{buttonArray[index]}</Text>
                         </View>
                     </ImageBackground>
                 </TouchableOpacity>
@@ -116,9 +141,8 @@ const ChampDetails = ({ route, navigation }) => {
                 borderRadius: 5
             }}>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <View style={styles.shadow}>
+                    <View style={[styles.shadow, { borderWidth: 3, borderColor: theme.darkBlue, borderRadius: 10 }]}>
                         <Image
-                            /* passive image unable to be displayed */
                             source={selectedSpellIndex > 3 ?
                                 { uri: `http://ddragon.leagueoflegends.com/cdn/12.5.1/img/passive/${spellInformation[selectedSpellIndex].image}` }
                                 :
@@ -126,8 +150,8 @@ const ChampDetails = ({ route, navigation }) => {
                             style={{ height: 70, width: 70 }}
                         />
                     </View>
-                    <View style={{ flex: 1 }}>
-                        <Text style={{ color: "white", fontSize: 18, margin: 10, textAlign: "center" }}>{spellInformation[selectedSpellIndex].name}</Text>
+                    <View style={{ flex: 1, borderWidth: 1, borderRadius: 2, marginHorizontal: 30, borderColor: theme.orange, backgroundColor: theme.lighterBlue }}>
+                        <Text style={{ color: theme.white, fontSize: 18, margin: 10, textAlign: "center" }}>{spellInformation[selectedSpellIndex].name}</Text>
                     </View>
                 </View>
                 <View style={{ marginHorizontal: 5, marginTop: 10 }}>
@@ -136,7 +160,7 @@ const ChampDetails = ({ route, navigation }) => {
                     <Text style={styles.baseStatsText}>Cost: {spellInformation[selectedSpellIndex].cost} mana</Text>
                     <Text style={styles.baseStatsText}>Range: {spellInformation[selectedSpellIndex].range}</Text>
                     <View style={{ marginTop: 15 }}>
-                        <Text style={{ color: "white", fontSize: 16 }}>Description</Text>
+                        <Text style={{ color: theme.white, fontSize: 16 }}>Description</Text>
                         <Text style={styles.baseStatsText}>{spellInformation[selectedSpellIndex].description}</Text>
                     </View>
 
@@ -145,44 +169,85 @@ const ChampDetails = ({ route, navigation }) => {
         )
     }
 
+    function checkMastery() {
+        let source = ""
+        switch (champMastery.championLevel) {
+            case 1: source = MasteryImages.mastery1;
+                break;
+            case 2: source = MasteryImages.mastery2;
+                break;
+            case 3: source = MasteryImages.mastery3;
+                break;
+            case 4: source = MasteryImages.mastery4;
+                break;
+            case 5: source = MasteryImages.mastery5;
+                break;
+            case 6: source = MasteryImages.mastery6;
+                break;
+            case 7: source = MasteryImages.mastery7;
+                break;
+            default: source = MasteryImages.mastery0
+        }
+
+        let image = <Image
+            source={source}
+            style={{ width: 100, height: 100, marginVertical: 10, borderRadius: 30 }}
+        />
+        return image
+    }
+
     //img size
     let height = 300
     let width = height * 0.55
     return (
-        <ScrollView style={{ height: "100%", width: "100%", backgroundColor: theme.darkBlue }}>
+        <View style={{ height: "100%", width: "100%", backgroundColor: theme.darkBlue }}>
             {loading ? (
                 <View style={{ marginTop: "50%" }}>
                     <ActivityIndicator animating={loading} color={theme.orange} size="large"
                         style={{}} />
                 </View>
             ) : (
-                <View contentContainerStyle={{ flexGrow: 1 }}>
-                    <View style={{ width: "90%", alignSelf: "center", marginTop: 20, flexDirection: "row" }}>
-                        <View style={{ flex: 1 }}>
-                            <Image
-                                /* source={{ uri: `http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champName}_0.jpg` }} */
-                                source={{ uri: `http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champName}_0.jpg` }}
-                                style={{ height: height, width: width, borderRadius: 5 }}
-                            />
-                        </View>
-                        <View style={{ flex: 1, justifyContent: "center", marginBottom: 30 }}>
-                            <View style={{ justifyContent: "center", alignItems: "center" }}>
-                                <Text style={{ fontSize: 24, color: "white", marginTop: 20 }}>{champName}</Text>
-                                <Text style={{ color: "white", fontSize: 16 }}>{champJson[champName].title}</Text>
-                                {/* Image on adaptive or atk speed / mastery level */}
-                                <View style={{ height: 50, width: 50, backgroundColor: "gray", borderRadius: 50, marginTop: 30 }} />
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                    <View>
+                        <View style={{ width: "90%", alignSelf: "center", marginTop: 20, flexDirection: "row" }}>
+                            <View style={{ flex: 1 }}>
+                                <Image
+                                    source={{ uri: `http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champName}_0.jpg` }}
+                                    style={{ height: height, width: width, borderRadius: 5 }}
+                                />
+                            </View>
+                            <View style={{ flex: 1, justifyContent: "center", backgroundColor: theme.mediumBlue, borderRadius: 5 }}>
+                                <View style={{ justifyContent: "center", alignItems: "center" }}>
+                                    <View style={[{
+                                        alignItems: "center",
+                                        backgroundColor: theme.mediumBlue,
+                                        padding: 10,
+                                        borderRadius: 5
+                                    },
+                                    styles.shadow]}>
+                                        <Text style={{ fontSize: 24, color: theme.white }}>{champName}</Text>
+                                        <Text style={{ color: theme.white, fontSize: 16 }}>{champJson[champName].title}</Text>
+                                    </View>
+                                    {/* Image on adaptive or atk speed / mastery level */}
+                                    <View style={{ marginTop: 20, width: "100%", alignItems: "center" }}>
+                                        <Text style={{ color: theme.white, fontSize: 18 }}>Mastery</Text>
+                                        {checkMastery()}
+                                        <Text style={{ color: theme.white }}>
+                                            {champMastery.championPoints > 0 ? `${champMastery.championPoints} points` : "Not played"}</Text>
+                                    </View>
+                                </View>
                             </View>
                         </View>
-                    </View>
-                    <View style={styles.loreMainContainer}>
-                        <View style={styles.loreContainer}>
-                            <Text style={styles.loreTitle}>Lore</Text>
-                            <Text style={{ color: "white" }}>{champJson[champName].lore}</Text>
+                        <View style={styles.loreMainContainer}>
+                            <View style={styles.loreContainer}>
+                                <Text style={styles.loreTitle}>Lore</Text>
+                                <Text style={{ color: theme.white }}>{champJson[champName].lore}</Text>
+                            </View>
                         </View>
-                    </View>
+                    </View >
                     <View style={{ width: "90%", alignSelf: "center", marginTop: 20, marginBottom: 20 }}>
                         <View style={styles.mainAbilityContainer}>
-                            <Text style={{ color: "white", marginBottom: 10, fontSize: 24 }}>Abilities</Text>
+                            <Text style={{ color: theme.white, marginBottom: 10, fontSize: 24 }}>Abilities</Text>
                             <View style={styles.abilitiesContainer}>
                                 <FlatList
                                     data={Object.values(spellInformation)}
@@ -190,9 +255,7 @@ const ChampDetails = ({ route, navigation }) => {
                                     keyExtractor={(item, index) => index}
                                     numColumns={3}
                                 />
-
                             </View>
-
                         </View>
                         {selectedSpellView()}
                         <View style={styles.baseStatsContainer}>
@@ -200,13 +263,13 @@ const ChampDetails = ({ route, navigation }) => {
                             <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 5 }}>
                                 <View style={{ flex: 1, marginLeft: 3 }}>
                                     <Text style={styles.baseStatsText}>
-                                        Health: {champJson[champName].stats.hp} - {champJson[champName].stats.hp + (champJson[champName].stats.hpperlevel * 18)}
+                                        Health: {champJson[champName].stats.hp} - {Math.round(champJson[champName].stats.hp + (champJson[champName].stats.hpperlevel * 18))}
                                     </Text>
                                     <Text style={styles.baseStatsText}>
-                                        Mana: {champJson[champName].stats.mp} - {champJson[champName].stats.mp + (champJson[champName].stats.mpperlevel * 18)}
+                                        Mana: {champJson[champName].stats.mp} - {Math.round(champJson[champName].stats.mp + (champJson[champName].stats.mpperlevel * 18))}
                                     </Text>
                                     <Text style={styles.baseStatsText}>
-                                        Armor: {champJson[champName].stats.armor} - {champJson[champName].stats.armor + (champJson[champName].stats.armorperlevel * 18)}
+                                        Armor: {champJson[champName].stats.armor} - {Math.round(champJson[champName].stats.armor + (champJson[champName].stats.armorperlevel * 18))}
                                     </Text>
                                     <Text style={styles.baseStatsText}>
                                         Move. speed: {champJson[champName].stats.movespeed}
@@ -216,13 +279,13 @@ const ChampDetails = ({ route, navigation }) => {
                                 <View style={{ width: 15 }} />
                                 <View style={{ flex: 1, marginLeft: 3 }}>
                                     <Text style={styles.baseStatsText}>
-                                        Health regen: {champJson[champName].stats.hpregen} - {champJson[champName].stats.hpregen + (champJson[champName].stats.hpregenperlevel * 18)}
+                                        Health regen: {champJson[champName].stats.hpregen} - {Math.round(champJson[champName].stats.hpregen + (champJson[champName].stats.hpregenperlevel * 18))}
                                     </Text>
                                     <Text style={styles.baseStatsText}>
-                                        Mana regen: {champJson[champName].stats.mpregen} - {champJson[champName].stats.mpregen + (champJson[champName].stats.mpregenperlevel * 18)}
+                                        Mana regen: {champJson[champName].stats.mpregen} - {Math.round(champJson[champName].stats.mpregen + (champJson[champName].stats.mpregenperlevel * 18))}
                                     </Text>
                                     <Text style={styles.baseStatsText}>
-                                        Magic Resist: {champJson[champName].stats.spellblock} - {champJson[champName].stats.spellblock + (champJson[champName].stats.spellblockperlevel * 18)}
+                                        Magic Resist: {champJson[champName].stats.spellblock} - {Math.round(champJson[champName].stats.spellblock + (champJson[champName].stats.spellblockperlevel * 18))}
                                     </Text>
 
                                 </View>
@@ -251,10 +314,10 @@ const ChampDetails = ({ route, navigation }) => {
                             </View>
                         </View>
                     </View>
-                </View>
+                </ScrollView>
             )
             }
-        </ScrollView >
+        </View >
     )
 }
 

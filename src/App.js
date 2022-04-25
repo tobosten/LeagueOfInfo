@@ -4,7 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { theme } from './theme';
 import ProjectContext from './ProjectContext';
-
 //screens
 import LoginScreen from './screens/Login/LoginScreen';
 import ChampSearch from './screens/ChampSearch/ChampSearch';
@@ -18,7 +17,7 @@ export default function App() {
   return (
     <ProjectContext>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='ChampDetails'>
+        <Stack.Navigator /* initialRouteName='ChampDetails' */>
           <Stack.Screen name="Login" component={LoginScreen}
             options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" } }} />
           <Stack.Screen name="ChampSearch" component={ChampSearch}

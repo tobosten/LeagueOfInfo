@@ -3,20 +3,46 @@ import React, { useState, useEffect, useContext } from 'react'
 import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { theme } from '../../theme'
 import styles from './styles'
-import { ChampArrayContext } from '../../ProjectContext'
+import { UserInfoContext, MasteryArrayContext } from '../../ProjectContext'
+import { constants } from '../../constants'
 
 
 const LoginScreen = ({ navigation }) => {
 
-    const [sumName, setSumName] = useState("")
-    const { champArray, setChampArray } = useContext(ChampArrayContext)
+    const [sumName, setSumName] = useState("Ezuyi")
     const [loading, setLoading] = useState(false)
+    const { userInfo, setUserInfo } = useContext(UserInfoContext)
+    const { setMasteryArray } = useContext(MasteryArrayContext)
 
     async function login() {
         //fetch user
         /* "https://euw1.api.riotgames.com//lol/champion-mastery/v4/champion-masteries/by-summoner/{encryptedSummonerId}/by-champion/{championId}?api_key={apiKey}" */
 
-        navigation.navigate("ChampSearch")
+        /* https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summonerName}?api_key={apiKey} */
+        axios.get(`https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${sumName}${constants.api_key}`)
+            .then((resp) => {
+                console.log(resp.data);
+                let id = resp.data.id
+                setUserInfo(
+                    {
+                        accoundId: resp.data.accountId,
+                        id: resp.data.id,
+                        name: resp.data.name,
+                        profileIconId: resp.data.profileiconId,
+                        puuid: resp.data.puuid,
+                        summonerLevel: resp.data.summonerLevel
+                    }
+                )
+                axios.get(
+                    `https://euw1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${id}${constants.api_key}`
+                ).then((resp) => {
+                    /* console.log("Mastery: ", resp.data); */
+                    setMasteryArray(resp.data)
+                    setSumName("")
+                    navigation.navigate("ChampSearch")
+                })
+            })
+
     }
 
     /* '#bc2b78' */
@@ -27,7 +53,6 @@ const LoginScreen = ({ navigation }) => {
             <Text style={{ color: "white" }}> Only EUW</Text>
             <View style={styles.titleContainer}>
                 <Text style={{ color: "white", fontSize: 30 }}>League of Info</Text>
-
             </View>
 
             <View style={styles.loginContainer}>

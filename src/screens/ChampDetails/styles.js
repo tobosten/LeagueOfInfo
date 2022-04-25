@@ -32,11 +32,12 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         backgroundColor: theme.lighterBlue,
-        width: "90%",
+        width: "95%",
         borderColor: theme.orange,
         alignSelf: "center",
         padding: 5,
-        marginBottom: 10
+        marginBottom: 8,
+        alignItems: "center"
     },
     abilityView: {
         width: 70,
