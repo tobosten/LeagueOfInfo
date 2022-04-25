@@ -196,6 +196,14 @@ const ChampDetails = ({ route, navigation }) => {
         return image
     }
 
+    function checkMasteryTitle() {
+       /*  console.log(champJson[champName].tags[0])
+        console.log(champMastery.championLevel); */
+        let masteryTitle = constants.masteryTitles[champMastery.championLevel - 1][champJson[champName].tags[0]]
+        console.log();    
+        return <Text style={{ color: theme.white, fontSize: 18 }}>{masteryTitle}</Text>
+    }
+
     //img size
     let height = 300
     let width = height * 0.55
@@ -228,9 +236,8 @@ const ChampDetails = ({ route, navigation }) => {
                                         <Text style={{ fontSize: 24, color: theme.white }}>{champName}</Text>
                                         <Text style={{ color: theme.white, fontSize: 16 }}>{champJson[champName].title}</Text>
                                     </View>
-                                    {/* Image on adaptive or atk speed / mastery level */}
                                     <View style={{ marginTop: 20, width: "100%", alignItems: "center" }}>
-                                        <Text style={{ color: theme.white, fontSize: 18 }}>Mastery</Text>
+                                        {checkMasteryTitle()}
                                         {checkMastery()}
                                         <Text style={{ color: theme.white }}>
                                             {champMastery.championPoints > 0 ? `${champMastery.championPoints} points` : "Not played"}</Text>

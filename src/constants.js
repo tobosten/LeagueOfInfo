@@ -3,16 +3,16 @@
 export const constants = {
     api_key: `?api_key=RGAPI-f81d7275-5b69-4c80-97dc-ae0220ac6bcd`,
 
-    masteryTitles: {
-        mastery1: {
+    masteryTitles: [
+        {
             Assassin: "Rogue",
             Fighter: "Scrapper",
             Mage: "Initiate",
             Marksman: "Tracker",
             Support: "Aide",
             Tank: "Grunt",
-        }, 
-        mastery2: {
+        },
+        {
             Assassin: "Prowler",
             Fighter: "Brawler",
             Mage: "Conjurer",
@@ -20,7 +20,7 @@ export const constants = {
             Support: "Protector",
             Tank: "Bruiser",
         },
-        mastery3: {
+        {
             Assassin: "Cutthroat",
             Fighter: "Warrior",
             Mage: "Invoker",
@@ -28,7 +28,7 @@ export const constants = {
             Support: "Keeper",
             Tank: "Bulwark",
         },
-        mastery4: {
+        {
             Assassin: "Reaper",
             Fighter: "Veteran",
             Mage: "Magus",
@@ -37,7 +37,7 @@ export const constants = {
             Tank: "Enforcer",
         },
 
-        mastery5: {
+        {
             Assassin: "Slayer",
             Fighter: "Destroyer",
             Mage: "Warlock",
@@ -46,7 +46,7 @@ export const constants = {
             Tank: "Brute",
         },
 
-        mastery6: {
+        {
             Assassin: "Executioner",
             Fighter: "Warmonger",
             Mage: "Sorcerer",
@@ -55,7 +55,7 @@ export const constants = {
             Tank: "Colossus",
         },
 
-        mastery7: {
+        {
             Assassin: "Deathmaster",
             Fighter: "Warlord",
             Mage: "Archmage",
@@ -63,7 +63,7 @@ export const constants = {
             Support: "Warden",
             Tank: "Juggernaut",
         },
-    }
+    ]
 
-    
+
 }

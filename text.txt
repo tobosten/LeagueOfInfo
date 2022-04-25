@@ -12,7 +12,6 @@ TODO:
         Passive info not showing.
         Check if field exists like cd, cost and range etc.
 
-    Add mastery icon and points in ChampDetails.
     
 
 Endpoints: 
