@@ -11,13 +11,14 @@ TODO:
     SelectedAbility:
         Passive info not showing.
         Check if field exists like cd, cost and range etc.
+    Decrease text size in champ details, title to 20px etc.
 
     
 
 Endpoints: 
     ProfileIcon: http://ddragon.leagueoflegends.com/cdn/12.7.1/img/profileicon/685.png
     IconArray: http://ddragon.leagueoflegends.com/cdn/12.7.1/data/en_US/profileicon.json
-    
+
 
 Ezuyi:
     "id": "vmarhJ_lwQwBwA1Uom0LpB8B_l4t7IxbsK1Y1l8H0SKWoCE",    

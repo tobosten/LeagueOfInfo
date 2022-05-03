@@ -19,10 +19,10 @@ const DrawerNavigator = () => {
         drawerInactiveBackgroundColor: theme.mediumBlue
       }}
     >
-      <Drawer.Screen name="SummonerScreen" component={SummonerScreen}
+      <Drawer.Screen name="Summoner" component={SummonerScreen}
         options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" }, headerTitle: "Summoner" }} />
-      <Drawer.Screen name="ChampSearch" component={ChampSearch}
-        options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" }, headerTitle: "Chamion Search" }} />
+      <Drawer.Screen name="Champions" component={ChampSearch}
+        options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" }, headerTitle: "Champions" }} />
     </Drawer.Navigator>
   )
 }

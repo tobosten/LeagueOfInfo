@@ -18,9 +18,6 @@ const LoginScreen = ({ navigation }) => {
 
     async function login() {
         //fetch user
-        /* "https://euw1.api.riotgames.com//lol/champion-mastery/v4/champion-masteries/by-summoner/{encryptedSummonerId}/by-champion/{championId}?api_key={apiKey}" */
-
-        /* https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summonerName}?api_key={apiKey} */
         if (sumName !== "") {
             axios.get(`https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${sumName}${constants.api_key}`)
                 .then((resp) => {
@@ -31,7 +28,7 @@ const LoginScreen = ({ navigation }) => {
                             accoundId: resp.data.accountId,
                             id: resp.data.id,
                             name: resp.data.name,
-                            profileIconId: `${resp.data.profileiconId}`,
+                            profileIconId: resp.data.profileIconId,
                             puuid: resp.data.puuid,
                             summonerLevel: resp.data.summonerLevel
                         }
