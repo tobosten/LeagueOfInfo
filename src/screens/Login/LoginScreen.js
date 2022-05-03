@@ -11,7 +11,7 @@ import { useToast } from 'react-native-toast-notifications'
 const LoginScreen = ({ navigation }) => {
 
     const toast = useToast()
-    const [sumName, setSumName] = useState("")
+    const [sumName, setSumName] = useState("Ezuyi")
     const [loading, setLoading] = useState(false)
     const { userInfo, setUserInfo } = useContext(UserInfoContext)
     const { setMasteryArray } = useContext(MasteryArrayContext)
@@ -31,7 +31,7 @@ const LoginScreen = ({ navigation }) => {
                             accoundId: resp.data.accountId,
                             id: resp.data.id,
                             name: resp.data.name,
-                            profileIconId: resp.data.profileiconId,
+                            profileIconId: `${resp.data.profileiconId}`,
                             puuid: resp.data.puuid,
                             summonerLevel: resp.data.summonerLevel
                         }
@@ -42,7 +42,7 @@ const LoginScreen = ({ navigation }) => {
                         /* console.log("Mastery: ", resp.data); */
                         setMasteryArray(resp.data)
                         setSumName("")
-                        navigation.navigate("ChampSearch")
+                        navigation.navigate("DrawerNavigator")
                     })
                 }).catch(() => {
                     toast.show("No summoner by that name")

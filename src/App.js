@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -9,10 +10,9 @@ import { ToastProvider } from 'react-native-toast-notifications'
 import LoginScreen from './screens/Login/LoginScreen';
 import ChampSearch from './screens/ChampSearch/ChampSearch';
 import ChampDetails from './screens/ChampDetails/ChampDetails';
+import DrawerNavigator from './screens/DrawerNavigator';
 
 const Stack = createNativeStackNavigator()
-
-/* key: RGAPI-cea814ac-4eb0-42a1-8384-bd2bc05c062e */
 
 export default function App() {
   return (
@@ -30,6 +30,7 @@ export default function App() {
               options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" }, headerTitle: "Champion Search" }} />
             <Stack.Screen name="ChampDetails" component={ChampDetails}
               options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" }, headerTitle: "Champion Search" }} />
+            <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} options={{ headerShown: false }} />
           </Stack.Navigator>
         </NavigationContainer>
       </ToastProvider>

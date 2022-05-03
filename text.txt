@@ -17,3 +17,13 @@ TODO:
 Endpoints: 
     ProfileIcon: http://ddragon.leagueoflegends.com/cdn/12.7.1/img/profileicon/685.png
     IconArray: http://ddragon.leagueoflegends.com/cdn/12.7.1/data/en_US/profileicon.json
+    
+
+Ezuyi:
+    "id": "vmarhJ_lwQwBwA1Uom0LpB8B_l4t7IxbsK1Y1l8H0SKWoCE",    
+    "accountId": "m5sjy8cSPg_K1dfEOBp5YQY9lFem-h-xY88KgH1jehJgB6w",
+    "puuid": "wjL06dfzQsgxCb1QeHfZezh6BKNckQxdllp2p4y13tQ70Iqn-us3KeqOVJU3leoaZhhugqGGAF-W-g",
+    "name": "Ezuyi",
+    "profileIconId": 4498,
+    "revisionDate": 1651267925000,
+    "summonerLevel": 334
