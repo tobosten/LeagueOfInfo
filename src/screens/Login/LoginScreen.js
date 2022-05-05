@@ -28,7 +28,7 @@ const LoginScreen = ({ navigation }) => {
     async function login() {
         //fetch user
         if (sumName !== "") {
-            axios.get(`https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${sumName}${constants.api_key}`)
+            axios.get(`https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${sumName}?${constants.api_key}`)
                 .then((resp) => {
                     console.log(resp.data);
                     let id = resp.data.id
@@ -43,7 +43,7 @@ const LoginScreen = ({ navigation }) => {
                         }
                     )
                     axios.get(
-                        `https://euw1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${id}${constants.api_key}`
+                        `https://euw1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${id}?${constants.api_key}`
                     ).then((resp) => {
                         setMasteryArray(resp.data)
                         setSumName("")

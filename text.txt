@@ -17,6 +17,37 @@ TODO:
     Pick region: Picker that changes context inside constants?
     Proper image for champ mastery when it's 0.
 
+Summoner spells:
+    Summoner1Id / summoner2Id: 
+        1 = Cleanse 
+        4 = Flash  
+        3 = Exhaust 
+        7 = Heal
+        10 = Ghost 
+        11 = Smite 
+        12 = Teleport
+        14 = Ignite 
+        21 = Barrier  
+
+     
+queueId: 420 = Ranked
+queueId 400 = Normal Draft
+
+{
+    gameCreation	1651001174000
+    gameDuration	1360
+    gameEndTimestamp	1651002570540
+    gameId	5843136985
+    gameMode	"CLASSIC"
+    gameName	"teambuilder-match-5843136985"
+    gameStartTimestamp	1651001210110
+    gameType	"MATCHED_GAME"  
+    gameVersion	"12.7.433.4138"
+    mapId	11
+}
+
+
+
 Maybe?:
     Change border colors in Summoner screen to color of current rank.
 
@@ -27,6 +58,8 @@ Bug:
 Endpoints: 
     ProfileIcon: http://ddragon.leagueoflegends.com/cdn/12.7.1/img/profileicon/685.png
     IconArray: http://ddragon.leagueoflegends.com/cdn/12.7.1/data/en_US/profileicon.json
+    SummonerSpells: https://ddragon.leagueoflegends.com/cdn/12.8.1/data/en_US/summoner.json
+    Item Images: https://ddragon.leagueoflegends.com/cdn/12.8.1/img/item/1004.png 
 
 
 Ezuyi:

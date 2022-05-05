@@ -26,7 +26,7 @@ const SummonerScreen = () => {
     if (isLoading == true) {
       if (userInfo != null) {
         axios.get(
-          `https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${userInfo.id}${constants.api_key}`
+          `https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${userInfo.id}?${constants.api_key}`
         ).then((resp) => {
           console.log("User Stats:", resp.data[0]);
           let data = resp.data[0]
@@ -47,7 +47,7 @@ const SummonerScreen = () => {
           }
 
           axios.get(
-            `https://euw1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${userInfo.id}${constants.api_key}`
+            `https://euw1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${userInfo.id}?${constants.api_key}`
           ).then((resp) => {
             let data = { one: resp.data[0].championId, two: resp.data[1].championId, three: resp.data[2].championId }
             let array = []
@@ -196,7 +196,7 @@ const SummonerScreen = () => {
   return (
     <ScrollView style={{ backgroundColor: theme.darkBlue, flex: 1 }}>
       {isLoading ? (
-        <ActivityIndicator animating={isLoading} color={theme.orange} size="large" />
+        <ActivityIndicator animating={isLoading} color={theme.orange} size="large" style={{ marginTop: 100 }} />
       ) : (
         <View style={{ marginBottom: 30 }}>
           <View style={styles.topContentContainer}>
