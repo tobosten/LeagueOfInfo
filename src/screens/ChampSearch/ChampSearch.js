@@ -21,16 +21,11 @@ const ChampSearch = ({ navigation }) => {
     const { champArray, setChampArray } = useContext(ChampArrayContext)
 
     useEffect(async () => {
-        /* console.log(champArray); */
-        await axios.get(`http://ddragon.leagueoflegends.com/cdn/12.6.1/data/en_US/champion.json`)
-            .then((resp) => {
-                setChampArray(resp.data.data)
-            }).then(() => {
-                //delay to set champArray
-                setTimeout(() => {
-                    setLoading(false)
-                }, 1500)
-            })
+        if (loading == true) {
+            if (champArray != null) {
+                setLoading(false)
+            }
+        }
     }, [])
 
     const renderItem = ({ item }) => {

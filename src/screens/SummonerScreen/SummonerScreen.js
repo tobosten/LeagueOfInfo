@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator, Image } from 'react-native'
+import { View, Text, ActivityIndicator, Image, FlatList, ImageBackground, ScrollView } from 'react-native'
 import React, { useEffect, useContext, useState } from 'react'
 import { theme } from '../../theme';
 import { UserInfoContext } from '../../ProjectContext';
@@ -6,6 +6,10 @@ import { constants } from '../../constants';
 import axios from 'axios';
 import { styles } from './styles';
 import { rankEmblems } from '../../assets/rankEmblems';
+import { ChampArrayContext, MasteryArrayContext } from '../../ProjectContext';
+import ChampionImages from '../../assets/ChampionImages';
+import { RankBorders } from '../../assets/rankBorders/RankBorders';
+import { MasteryImages } from '../../assets/MasteryImages'
 
 
 const SummonerScreen = () => {
@@ -13,16 +17,14 @@ const SummonerScreen = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   const { userInfo } = useContext(UserInfoContext)
+  const { champArray } = useContext(ChampArrayContext)
+  const { masteryArray } = useContext(MasteryArrayContext)
   const [rankedStats, setRankedStats] = useState(null)
-
+  const [mostPlayed, setMostPlayed] = useState([])
 
   useEffect(() => {
-    /* console.log("User Info:", userInfo); */
-
-
     if (isLoading == true) {
       if (userInfo != null) {
-        /* console.log(userInfo) */
         axios.get(
           `https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${userInfo.id}${constants.api_key}`
         ).then((resp) => {
@@ -43,56 +45,198 @@ const SummonerScreen = () => {
               }
             )
           }
-          setIsLoading(!isLoading)
+
+          axios.get(
+            `https://euw1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${userInfo.id}${constants.api_key}`
+          ).then((resp) => {
+            let data = { one: resp.data[0].championId, two: resp.data[1].championId, three: resp.data[2].championId }
+            let array = []
+
+            Object.values(champArray).forEach((value) => {
+              if (data.two == value.key) { array.push({ id: value.id, key: value.key }) }
+            })
+            Object.values(champArray).forEach((value) => {
+              if (data.one == value.key) { array.push({ id: value.id, key: value.key }) }
+            })
+            Object.values(champArray).forEach((value) => {
+              if (data.three == value.key) { array.push({ id: value.id, key: value.key }) }
+            })
+            setMostPlayed(array)
+            setIsLoading(!isLoading)
+          })
         })
       }
     }
   }, [])
 
+  function profileComponent() {
+    /* change border depending on player rank */
+    let rankBorder = ""
+    if (rankedStats.tier != "Unranked") {
+      rankBorder = RankBorders[rankedStats.tier]
+    } else {
+      rankBorder = null
+    }
+
+    return (
+      <View>
+        <View style={[{
+          backgroundColor: theme.mediumBlue,
+          alignItems: "center",
+          width: "80%",
+          alignSelf: "center",
+          marginTop: 30,
+          borderRadius: 5,
+          paddingVertical: 10
+        }, styles.shadow]}>
+          <Text style={{
+            color: theme.white,
+            fontSize: 26
+          }}>{userInfo.name}</Text>
+        </View>
+        <ImageBackground
+          source={rankBorder}
+          style={{
+            width: "100%",
+            height: 300,
+            marginTop: -70,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Image
+            source={{ uri: `http://ddragon.leagueoflegends.com/cdn/12.7.1/img/profileicon/${userInfo.profileIconId}.png` }}
+            style={styles.summonerIcon}
+          />
+        </ImageBackground>
+        <Text style={[{
+          textAlign: "center",
+          alignSelf: "center",
+          color: theme.white,
+          backgroundColor: theme.mediumBlue,
+          borderRadius: 5,
+          width: 80,
+          marginTop: 0,
+          fontSize: 18,
+          paddingVertical: 3,
+          borderWidth: 1,
+          borderColor: theme.orange
+        }, styles.shadow]}>{userInfo.summonerLevel}</Text>
+      </View>
+    )
+
+  }
 
 
+  const mostPlayedRender = ({ item, index }) => {
+
+    let style = {}
+    if (index < 1 || index > 1) {
+      style = { marginTop: 10 }
+    }
+    let masteryLevel = ""
+    masteryArray.forEach((value) => {
+      if (item.key == value.championId) {
+        masteryLevel = "mastery" + value.championLevel
+      }
+    })
+
+    return (
+      <View style={{ marginHorizontal: 15 }}>
+        <Image
+          source={MasteryImages[masteryLevel]}/* set so image displays depending on mastery level */
+          style={[{ height: 40, width: 40, alignSelf: "center", marginBottom: 5 }, style]}
+        />
+        <Image
+          source={ChampionImages[mostPlayed[index].id]}
+          style={{
+            height: 80,
+            width: 80,
+            borderRadius: 50,
+          }}
+        />
+        <Text style={[{
+          textAlign: "center",
+          color: theme.white,
+          marginTop: 5,
+          padding: 2,
+          backgroundColor: theme.darkBlue,
+          borderRadius: 5
+        }, styles.shadow]}>{item.id}</Text>
+      </View>
+    )
+  }
+
+
+  /* unranked image not showing */
+  function rankImage() {
+    let img = rankEmblems[rankedStats.tier]
+    if (rankedStats.tier == "Unranked") {
+      igm = rankEmblems.UNRANKED
+    }
+    return (
+      <View>
+        <Image
+          source={img}
+          style={{ height: 120, width: 100 }}
+        />
+      </View>
+    )
+  }
+
+  function rankText() {
+    let text = `${rankedStats.tier} ${rankedStats.division} \n${rankedStats.lp} LP `
+    if (rankedStats.tier == "Unranked") { text = rankedStats.tier }
+    return (
+      <Text style={styles.rankText}>{text}</Text>
+    )
+
+  }
 
   return (
-    <View style={{ backgroundColor: theme.darkBlue, flex: 1 }}>
+    <ScrollView style={{ backgroundColor: theme.darkBlue, flex: 1 }}>
       {isLoading ? (
         <ActivityIndicator animating={isLoading} color={theme.orange} size="large" />
       ) : (
-        <View>
+        <View style={{ marginBottom: 30 }}>
           <View style={styles.topContentContainer}>
-            <View style={styles.summonerIconContainer}>
-              <Image
-                source={{ uri: `http://ddragon.leagueoflegends.com/cdn/12.7.1/img/profileicon/${userInfo.profileIconId}.png` }}
-                style={styles.summonerIcon}
-              />
-              <Text style={styles.summonerLevelText}>{userInfo.summonerLevel}</Text>
-            </View>
-            <View style={styles.summonerNameContainer}>
-              <Text style={styles.summonerNameText}>{userInfo.name}</Text>
-            </View>
+            {profileComponent()}
           </View>
 
-          <View style={styles.rankedSoloContainer}>
+          <View style={[styles.rankedSoloContainer, styles.shadow]}>
             <Text style={styles.rankedSoloText}>Ranked Solo</Text>
             <View style={styles.rankViewContainer}>
               <View style={styles.rankContainer}>
-                <Image
-                  source={rankedStats.tier == "Undefined" ? null : rankEmblems[rankedStats.tier]}
-                  style={{ width: 100, height: 100 }}
-                />
+                {rankImage()}
               </View>
               <View style={[styles.rankContainer, { marginRight: 15 }]}>
                 <View style={styles.rankTextContainer}>
-                  <Text style={styles.rankText}>{rankedStats.tier == "Unranked" ?
-                    rankedStats.tier
-                    :
-                    `${rankedStats.tier} ${rankedStats.division} \n${rankedStats.lp} LP `}</Text>
+                  {rankText()}
                 </View>
               </View>
             </View>
           </View>
+
+          <View style={[styles.mostPlayedContainer, styles.shadow]}>
+            <Text style={styles.highestMasteryText}>Highest Mastery</Text>
+            <View style={{
+              marginBottom: 10,
+              width: "90%",
+              alignItems: "center",
+              paddingVertical: 10,
+            }}>
+              <FlatList
+                data={mostPlayed}
+                renderItem={mostPlayedRender}
+                keyExtractor={(item, index) => index}
+                horizontal={true}
+                style={{}}
+              />
+            </View>
+          </View>
         </View>
       )}
-    </View>
+    </ScrollView>
   )
 }
 

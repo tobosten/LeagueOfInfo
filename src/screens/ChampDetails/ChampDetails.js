@@ -231,7 +231,9 @@ const ChampDetails = ({ route, navigation }) => {
                                     },
                                     styles.shadow]}>
                                         <Text style={{ fontSize: 24, color: theme.white }}>{champName}</Text>
-                                        <Text style={{ color: theme.white, fontSize: 16 }}>{champJson[champName].title}</Text>
+                                        <Text style={{ color: theme.white, fontSize: 16 }}>
+                                            {champJson[champName].title.charAt(0).toUpperCase() + champJson[champName].title.slice(1)}
+                                            </Text>
                                     </View>
                                     <View style={{ marginTop: 20, width: "100%", alignItems: "center" }}>
                                         {checkMasteryTitle()}

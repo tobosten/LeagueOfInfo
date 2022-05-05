@@ -13,8 +13,8 @@ const ProjectContext = ({ children }) => {
     return (
         <ChampArrayContext.Provider value={{ champArray, setChampArray }}>
             <UserInfoContext.Provider value={{ userInfo, setUserInfo }}>
-                <MasteryArrayContext.Provider value={{masteryArray, setMasteryArray}}>
-                    {children}
+                <MasteryArrayContext.Provider value={{ masteryArray, setMasteryArray }}>
+                        {children}
                 </MasteryArrayContext.Provider>
             </UserInfoContext.Provider>
         </ChampArrayContext.Provider>

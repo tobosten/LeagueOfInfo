@@ -1,6 +1,7 @@
 
 
 export const rankEmblems = {
+    UNRANKED: require("./emblems/unrankedEmblem.png"),
     IRON: require("./emblems/ironEmblem.png"),
     SILVER: require("./emblems/silverEmblem.png"),
     GOLD: require("./emblems/goldEmblem.png"),

@@ -7,9 +7,7 @@ export const styles = StyleSheet.create({
 
     topContentContainer: {
         borderColor: "white",
-        width: "100%",
-        height: 200,
-        flexDirection: "row"
+        width: "100%"
     },
     summonerIconContainer: {
         flex: 0.7,
@@ -18,10 +16,11 @@ export const styles = StyleSheet.create({
         justifyContent: "center"
     },
     summonerIcon: {
-        height: 100,
-        width: 100,
-        borderRadius: 5,
-        marginBottom: 7,
+        height: 132,
+        width: 132,
+        borderRadius: 200,
+        marginTop:105
+
         /* borderWidth: 1,
         borderColor: theme.orange */
     },
@@ -75,7 +74,7 @@ export const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: theme.orange,
         borderRadius: 5,
-        backgroundColor: theme.lighterBlue, 
+        backgroundColor: theme.lighterBlue,
         justifyContent: "center",
         alignItems: "center",
         paddingVertical: 10,
@@ -85,5 +84,32 @@ export const styles = StyleSheet.create({
         color: theme.white,
         fontSize: 18,
         textAlign: "center"
+    },
+    mostPlayedContainer: {
+        backgroundColor: theme.mediumBlue,
+        width: "90%",
+        alignSelf: "center",
+        alignItems: "center",
+        borderRadius: 5
+    },
+    highestMasteryText: {
+        marginRight: "auto",
+        margin: 10,
+        color: theme.white,
+        fontSize: 20
+    }
+    
+    
+    ,
+    shadow: {
+        shadowColor: "black",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+
+        elevation: 5,
     }
 })

@@ -6,6 +6,7 @@ import styles from './styles'
 import { UserInfoContext, MasteryArrayContext } from '../../ProjectContext'
 import { constants } from '../../constants'
 import { useToast } from 'react-native-toast-notifications'
+import { ChampArrayContext } from '../../ProjectContext'
 
 
 const LoginScreen = ({ navigation }) => {
@@ -15,6 +16,14 @@ const LoginScreen = ({ navigation }) => {
     const [loading, setLoading] = useState(false)
     const { userInfo, setUserInfo } = useContext(UserInfoContext)
     const { setMasteryArray } = useContext(MasteryArrayContext)
+    const { setChampArray } = useContext(ChampArrayContext)
+
+    useEffect(() => {
+        axios.get(`http://ddragon.leagueoflegends.com/cdn/12.6.1/data/en_US/champion.json`)
+            .then((resp) => {
+                setChampArray(resp.data.data)
+            })
+    }, [])
 
     async function login() {
         //fetch user
@@ -36,7 +45,6 @@ const LoginScreen = ({ navigation }) => {
                     axios.get(
                         `https://euw1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${id}${constants.api_key}`
                     ).then((resp) => {
-                        /* console.log("Mastery: ", resp.data); */
                         setMasteryArray(resp.data)
                         setSumName("")
                         navigation.navigate("DrawerNavigator")

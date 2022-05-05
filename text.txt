@@ -12,7 +12,16 @@ TODO:
         Passive info not showing.
         Check if field exists like cd, cost and range etc.
     Decrease text size in champ details, title to 20px etc.
+    Download new rank gifs with higher fps from bookmark.
+    Animation around summoner icon?
+    Pick region: Picker that changes context inside constants?
+    Proper image for champ mastery when it's 0.
 
+Maybe?:
+    Change border colors in Summoner screen to color of current rank.
+
+Bug:
+    Unranked image not showing.
     
 
 Endpoints: 
