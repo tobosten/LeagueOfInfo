@@ -16,6 +16,8 @@ TODO:
     Animation around summoner icon?
     Pick region: Picker that changes context inside constants?
     Proper image for champ mastery when it's 0.
+    Match array not fetching by index? Validate.
+    Fix match card seconds, add 0 if < 10
 
 Summoner spells:
     Summoner1Id / summoner2Id: 
@@ -60,6 +62,7 @@ Endpoints:
     IconArray: http://ddragon.leagueoflegends.com/cdn/12.7.1/data/en_US/profileicon.json
     SummonerSpells: https://ddragon.leagueoflegends.com/cdn/12.8.1/data/en_US/summoner.json
     Item Images: https://ddragon.leagueoflegends.com/cdn/12.8.1/img/item/1004.png 
+    RuneIds: https://ddragon.leagueoflegends.com/cdn/10.16.1/data/en_US/runesReforged.json
 
 
 Ezuyi:

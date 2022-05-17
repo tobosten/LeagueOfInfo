@@ -21,8 +21,6 @@ export const styles = StyleSheet.create({
         borderRadius: 200,
         marginTop:105
 
-        /* borderWidth: 1,
-        borderColor: theme.orange */
     },
     summonerLevelText: {
         color: theme.orange,

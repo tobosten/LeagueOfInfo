@@ -80,48 +80,48 @@ const SummonerScreen = () => {
 
     return (
       <View>
-        <View style={[{
-          backgroundColor: theme.mediumBlue,
-          alignItems: "center",
-          width: "80%",
-          alignSelf: "center",
-          marginTop: 30,
-          borderRadius: 5,
-          paddingVertical: 10
-        }, styles.shadow]}>
-          <Text style={{
+        <View style={{ alignItems: "center", marginTop: 30 }}>
+          <Text style={[{
+            backgroundColor: theme.mediumBlue,
+            width: "80%",
+            padding: 10,
+            textAlign: "center",
             color: theme.white,
-            fontSize: 26
-          }}>{userInfo.name}</Text>
+            fontSize: 26,
+            borderRadius: 5
+          }, styles.shadow]}>
+            {userInfo.name}
+          </Text>
+          <ImageBackground
+            source={RankBorders[rankedStats.tier]}
+            style={{
+              width: 400,
+              height: 350,
+              marginTop: -55,
+              justifyContent: "center",
+              alignItems: "center",
+              elevation: 10
+            }}
+          >
+            <Image
+              source={{ uri: `http://ddragon.leagueoflegends.com/cdn/12.7.1/img/profileicon/${userInfo.profileIconId}.png` }}
+              style={styles.summonerIcon}
+            />
+          </ImageBackground>
+          <Text style={[{
+            textAlign: "center",
+            alignSelf: "center",
+            color: theme.white,
+            backgroundColor: theme.mediumBlue,
+            borderRadius: 5,
+            width: 80,
+            marginTop: 0,
+            fontSize: 18,
+            paddingVertical: 3,
+            borderWidth: 1,
+            borderColor: theme.orange
+          }, styles.shadow]}>{userInfo.summonerLevel}</Text>
         </View>
-        <ImageBackground
-          source={rankBorder}
-          style={{
-            width: "100%",
-            height: 300,
-            marginTop: -70,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Image
-            source={{ uri: `http://ddragon.leagueoflegends.com/cdn/12.7.1/img/profileicon/${userInfo.profileIconId}.png` }}
-            style={styles.summonerIcon}
-          />
-        </ImageBackground>
-        <Text style={[{
-          textAlign: "center",
-          alignSelf: "center",
-          color: theme.white,
-          backgroundColor: theme.mediumBlue,
-          borderRadius: 5,
-          width: 80,
-          marginTop: 0,
-          fontSize: 18,
-          paddingVertical: 3,
-          borderWidth: 1,
-          borderColor: theme.orange
-        }, styles.shadow]}>{userInfo.summonerLevel}</Text>
       </View>
     )
 

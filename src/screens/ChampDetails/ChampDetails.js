@@ -89,16 +89,20 @@ const ChampDetails = ({ route, navigation }) => {
             }).then(() => {
                 setTimeout(() => {
                     setLoading(false)
+
                 }, 200)
             })
     }, [])
 
-
+    if (spellInformation != null) {
+        console.log(spellInformation);
+    }
 
 
     const abilityRenderItem = ({ item, index }) => {
         let uri = `http://ddragon.leagueoflegends.com/cdn/12.5.1/img/spell/${item.image}`
         if (index == 4) { uri = `http://ddragon.leagueoflegends.com/cdn/12.5.1/img/passive/${item.image}` }
+
         return (
             <View style={styles.abilityView}>
                 <TouchableOpacity style={[{ borderWidth: 3, borderColor: theme.mediumBlue, borderRadius: 10 }, styles.shadow]}
@@ -110,6 +114,7 @@ const ChampDetails = ({ route, navigation }) => {
                 >
                     <ImageBackground
                         source={{ uri: uri }}
+                        /*  source={{ uri: uri }} */
                         style={styles.abilityImage}
                     >
                         <View style={{ backgroundColor: theme.darkBlue, width: 15, heigth: 15, margin: 3, borderRadius: 2, borderWidth: .5, borderColor: theme.white }}>
@@ -214,6 +219,10 @@ const ChampDetails = ({ route, navigation }) => {
             ) : (
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                     <View>
+                        {/* <Image 
+                        source={require(`../../assets/champPassives/${champJson.passive.image.full}`)}
+                        style={{height: 50, width: 50}}
+                        /> */}
                         <View style={{ width: "90%", alignSelf: "center", marginTop: 20, flexDirection: "row" }}>
                             <View style={{ flex: 1 }}>
                                 <Image
@@ -233,7 +242,7 @@ const ChampDetails = ({ route, navigation }) => {
                                         <Text style={{ fontSize: 24, color: theme.white }}>{champName}</Text>
                                         <Text style={{ color: theme.white, fontSize: 16 }}>
                                             {champJson[champName].title.charAt(0).toUpperCase() + champJson[champName].title.slice(1)}
-                                            </Text>
+                                        </Text>
                                     </View>
                                     <View style={{ marginTop: 20, width: "100%", alignItems: "center" }}>
                                         {checkMasteryTitle()}
@@ -260,6 +269,7 @@ const ChampDetails = ({ route, navigation }) => {
                                     renderItem={abilityRenderItem}
                                     keyExtractor={(item, index) => index}
                                     numColumns={3}
+
                                 />
                             </View>
                         </View>

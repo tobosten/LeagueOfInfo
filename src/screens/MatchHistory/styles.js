@@ -3,11 +3,11 @@ import { StyleSheet } from "react-native"
 
 export const styles = StyleSheet.create({
 
-    weaponImage: {
-        width: 25,
-        height: 25,
+    itemImage: {
+        width: 30,
+        height: 30,
         borderRadius: 3,
-        backgroundColor: "lightgray",
+        backgroundColor: "#515151",
         margin: 1
     },
     shadow: {
