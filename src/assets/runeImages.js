@@ -5,7 +5,7 @@ export const runeImages = {
     8100: require("../assets/Runes/Domination.png"),
     8126: require("../assets/Runes/Domination/CheapShot.png"),
     8128: require("../assets/Runes/Domination/DarkHarvest.png"),
-    8212: require("../assets/Runes/Domination/Electrocute.png"),
+    8112: require("../assets/Runes/Domination/Electrocute.png"),
     8138: require("../assets/Runes/Domination/EyeballCollection.png"),
     8120: require("../assets/Runes/Domination/GhostPoro.png"),
     9923: require("../assets/Runes/Domination/HailOfBlades.png"),
@@ -19,7 +19,7 @@ export const runeImages = {
     8136: require("../assets/Runes/Domination/ZombieWard.png"),
 
     /* Inspiration */
-    8300: require("../assets/Runes/Whimsy.png"),
+    8300: require("../assets/Runes/Inspiration.png"),
     8345: require("../assets/Runes/Inspiration/BiscuitDelivery.png"),
     8347: require("../assets/Runes/Inspiration/CosmicInsight.png"),
     8369: require("../assets/Runes/Inspiration/FirstStrike.png"), /* id is for ex rune MasterKey, needs check when getting image */
@@ -40,14 +40,14 @@ export const runeImages = {
     8017: require("../assets/Runes/Precision/CutDown.png"),
     8021: require("../assets/Runes/Precision/FleetFootwork.png"),
     8229: require("../assets/Runes/Precision/LastStand.png"),
-    9104: require("../assets/Runes/Precision/LegendAlacrity.png"),
-    9103: require("../assets/Runes/Precision/LegendBloodline.png"),
-    9105: require("../assets/Runes/Precision/LegendTenacity.png"),
+    9104: require("../assets/Runes/Precision/LegendAlacrity.png"), /* 9104, 8104? */
+    9103: require("../assets/Runes/Precision/LegendBloodline.png"),  /*  9103, 8103? */
+    9105: require("../assets/Runes/Precision/LegendTenacity.png"), /* 9105, 8105? */
     8008: require("../assets/Runes/Precision/LethalTempo.png"),
-    9101: require("../assets/Runes/Precision/Overheal.png"),
+    9101: require("../assets/Runes/Precision/Overheal.png"), /* 9101, 8101? */
     8009: require("../assets/Runes/Precision/PresenceOfMind.png"),
-    9005: require("../assets/Runes/Precision/PressTheAttack.png"),
-    9111: require("../assets/Runes/Precision/Triumph.png"),
+    8005: require("../assets/Runes/Precision/PressTheAttack.png"),
+    9111: require("../assets/Runes/Precision/Triumph.png"),  /* 9111, 8111? */
 
     /* Resolve */
     8400: require("../assets/Runes/Resolve.png"),

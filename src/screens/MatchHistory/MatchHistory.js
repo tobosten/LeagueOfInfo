@@ -8,6 +8,7 @@ import { constants } from '../../constants'
 import ChampionImages from '../../assets/ChampionImages'
 import { SummonerSpells } from '../../assets/SummonerSpells'
 import { runeImages } from '../../assets/runeImages'
+import { Icons } from '../../assets/Icons'
 
 const MatchHistory = () => {
 
@@ -23,15 +24,8 @@ const MatchHistory = () => {
 
 
     let matchIDs = []
+    const [matchIDs2, setMatchIDs2] = useState([])
     let fullMatchObjects = []
-
-    async function fetchMatches(id) {
-        await axios.get(
-            `https://europe.api.riotgames.com/lol/match/v5/matches/${matchIDs[id]}?${constants.api_key}`
-        ).then((resp) => {
-            fullMatchObjects.push(resp.data)
-        })
-    }
 
     useEffect(async () => {
         await axios.get(
@@ -43,11 +37,13 @@ const MatchHistory = () => {
             })
             const halfWayIndex = Math.ceil(matchIDs.length / 2)
             matchIDs = matchIDs.slice(0, halfWayIndex)
-
+            /* matchIDs2 = matchIDs.slice(1, halfWayIndex) */
+            setMatchIDs2(matchIDs.slice(1, halfWayIndex))
             /* loop axios.get on 10 last games. */
             for (let i = 0; i < matchIDs.length; i++) {
                 fetchMatches(i)
             }
+            console.log(fullMatchObjects);
             setMatches(fullMatchObjects)
 
             setTimeout(() => {
@@ -66,6 +62,18 @@ const MatchHistory = () => {
 
         })
     }, [])
+
+    async function fetchMatches(id) {
+        await axios.get(
+            `https://europe.api.riotgames.com/lol/match/v5/matches/${matchIDs[id]}?${constants.api_key}`
+        ).then((resp) => {
+            fullMatchObjects.push(resp.data)
+        })
+    }
+
+    function fetchMoreMatches() {
+        /* console.log(matchIDs2); */
+    }
 
     if (isLoading == true && matches != null && runeJson != null) {
         if (gameModes != null) {
@@ -92,8 +100,11 @@ const MatchHistory = () => {
         let getSec = duration.substring(duration.indexOf(".") + 1)
         getSec = `.${getSec}`
         getSec = parseFloat(getSec)
-        let seconds = 60 * getSec
+        let seconds = (60 * getSec).toFixed(0)
         let minutes = Math.floor(time / 60)
+        if(seconds < 10) {
+            seconds = `0${seconds}`
+        }
 
 
         let runeIDs = {
@@ -125,9 +136,12 @@ const MatchHistory = () => {
             userStats.item6
         ]
 
-        /* console.log(userStats.item0) */
-        /* loop and get all item ids and images */
-        /* Rune ids in endpoints */
+
+        itemImageArray.forEach((value, index) => {
+            if (value = 0) {
+                itemImageArray[index] = Icons.noItem
+            }
+        })
 
         gameModes.forEach((value) => {
             if (value.gameMode == item.info.gameMode) {
@@ -185,8 +199,10 @@ const MatchHistory = () => {
                             paddingHorizontal: 5,
                             marginVertical: 2,
                             borderRadius: 3,
-                            textAlign: "center"
-                        }}>{`${minutes}:${seconds.toFixed(0)}`}</Text>
+                            textAlign: "center",
+                            marginLeft: "auto",
+                            marginRight: 10
+                        }}>{`${minutes}:${seconds}`}</Text>
                     </View>
 
 
@@ -213,7 +229,7 @@ const MatchHistory = () => {
                             <View style={{ flexDirection: "row" }}>
                                 <Image
                                     source={{ uri: `https://ddragon.leagueoflegends.com/cdn/12.8.1/img/item/${itemImageArray[0]}.png ` }}
-                                    style={styles.itemImage} />
+                                    style={[styles.itemImage]} />
                                 <Image
                                     source={{ uri: `https://ddragon.leagueoflegends.com/cdn/12.8.1/img/item/${itemImageArray[1]}.png ` }}
                                     style={styles.itemImage} />
@@ -234,7 +250,7 @@ const MatchHistory = () => {
                                     style={styles.itemImage} />
                                 <Image
                                     source={{ uri: `https://ddragon.leagueoflegends.com/cdn/12.8.1/img/item/${itemImageArray[5]}.png ` }}
-                                    style={styles.itemImage} />
+                                    style={[styles.itemImage]} />
                             </View>
                         </View>
                         <View style={{ alignItems: "center" }}>
@@ -264,6 +280,19 @@ const MatchHistory = () => {
                         data={matches}
                         renderItem={matchRender}
                         keyExtractor={(item, index) => index}
+                        ListFooterComponent={() => {
+                            return (
+                                <TouchableOpacity style={{
+                                    backgroundColor: theme.lighterBlue,
+                                    borderRadius: 5,
+                                    height: 50,
+                                    justifyContent: 'center',
+                                    alignItems: "center"
+                                }} onPress={() => { fetchMoreMatches() }}>
+                                    <Text style={{ color: theme.white }}>More Matches...</Text>
+                                </TouchableOpacity>
+                            )
+                        }}
                     />
                 </View>
             )}
