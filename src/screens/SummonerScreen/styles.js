@@ -16,10 +16,7 @@ export const styles = StyleSheet.create({
         justifyContent: "center"
     },
     summonerIcon: {
-        height: 132,
-        width: 132,
-        borderRadius: 200,
-        marginTop:105
+        
 
     },
     summonerLevelText: {

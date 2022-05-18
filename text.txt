@@ -13,11 +13,9 @@ TODO:
         Check if field exists like cd, cost and range etc.
     Decrease text size in champ details, title to 20px etc.
     Download new rank gifs with higher fps from bookmark.
-    Animation around summoner icon?
     Pick region: Picker that changes context inside constants?
     Proper image for champ mastery when it's 0.
-    Match array not fetching by index? Validate.
-    Fix match card seconds, add 0 if < 10
+    Match array not fetching in order? Validate.
 
 Summoner spells:
     Summoner1Id / summoner2Id: 

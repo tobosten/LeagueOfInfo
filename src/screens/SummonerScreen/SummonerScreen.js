@@ -10,6 +10,8 @@ import { ChampArrayContext, MasteryArrayContext } from '../../ProjectContext';
 import ChampionImages from '../../assets/ChampionImages';
 import { RankBorders } from '../../assets/rankBorders/RankBorders';
 import { MasteryImages } from '../../assets/MasteryImages'
+import { LevelBorders } from "../../assets/levelBorders/LevelBorders"
+import ProfileLevelBorder from '../../components/ProfileLevelBorder';
 
 
 const SummonerScreen = () => {
@@ -70,13 +72,8 @@ const SummonerScreen = () => {
   }, [])
 
   function profileComponent() {
-    /* change border depending on player rank */
-    let rankBorder = ""
-    if (rankedStats.tier != "Unranked") {
-      rankBorder = RankBorders[rankedStats.tier]
-    } else {
-      rankBorder = null
-    }
+
+
 
     return (
       <View>
@@ -88,26 +85,11 @@ const SummonerScreen = () => {
             textAlign: "center",
             color: theme.white,
             fontSize: 26,
-            borderRadius: 5
+            borderRadius: 5,
           }, styles.shadow]}>
             {userInfo.name}
           </Text>
-          <ImageBackground
-            source={RankBorders[rankedStats.tier]}
-            style={{
-              width: 400,
-              height: 350,
-              marginTop: -55,
-              justifyContent: "center",
-              alignItems: "center",
-              elevation: 10
-            }}
-          >
-            <Image
-              source={{ uri: `http://ddragon.leagueoflegends.com/cdn/12.7.1/img/profileicon/${userInfo.profileIconId}.png` }}
-              style={styles.summonerIcon}
-            />
-          </ImageBackground>
+          <ProfileLevelBorder />
           <Text style={[{
             textAlign: "center",
             alignSelf: "center",
@@ -115,7 +97,7 @@ const SummonerScreen = () => {
             backgroundColor: theme.mediumBlue,
             borderRadius: 5,
             width: 80,
-            marginTop: 0,
+            marginTop: 30,
             fontSize: 18,
             paddingVertical: 3,
             borderWidth: 1,
@@ -168,17 +150,15 @@ const SummonerScreen = () => {
   }
 
 
-  /* unranked image not showing */
   function rankImage() {
     let img = rankEmblems[rankedStats.tier]
     if (rankedStats.tier == "Unranked") {
-      igm = rankEmblems.UNRANKED
     }
     return (
       <View>
         <Image
-          source={img}
-          style={{ height: 120, width: 100 }}
+          source={rankedStats.tier == "Unranked" ? require("../../assets/emblems/unrankedEmblem.png") : img}
+          style={{ height: 135, width: 100 }}
         />
       </View>
     )
@@ -192,6 +172,7 @@ const SummonerScreen = () => {
     )
 
   }
+
 
   return (
     <ScrollView style={{ backgroundColor: theme.darkBlue, flex: 1 }}>

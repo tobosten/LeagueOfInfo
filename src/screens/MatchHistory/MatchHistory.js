@@ -14,14 +14,11 @@ const MatchHistory = () => {
 
     const { userInfo } = useContext(UserInfoContext)
 
-    const [matchInfo, setMatchInfo] = useState(null)
     const [gameModes, setGameModes] = useState(null)
-    const [itemJson, setItemJson] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [runeJson, setRunesJson] = useState(null)
-
     const [matches, setMatches] = useState([])
-
+    const [showMoreMatches, setShowMoreMatches] = useState(false)
 
     let matchIDs = []
     const [matchIDs2, setMatchIDs2] = useState([])
@@ -31,19 +28,16 @@ const MatchHistory = () => {
         await axios.get(
             `https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/${userInfo.puuid}/ids?start=0&count=20&${constants.api_key}`
         ).then((resp) => {
-            /* console.log(resp.data); */
             resp.data.forEach((value) => {
                 matchIDs.push(value)
             })
             const halfWayIndex = Math.ceil(matchIDs.length / 2)
             matchIDs = matchIDs.slice(0, halfWayIndex)
-            /* matchIDs2 = matchIDs.slice(1, halfWayIndex) */
             setMatchIDs2(matchIDs.slice(1, halfWayIndex))
             /* loop axios.get on 10 last games. */
             for (let i = 0; i < matchIDs.length; i++) {
                 fetchMatches(i)
             }
-            console.log(fullMatchObjects);
             setMatches(fullMatchObjects)
 
             setTimeout(() => {
@@ -73,6 +67,19 @@ const MatchHistory = () => {
 
     function fetchMoreMatches() {
         /* console.log(matchIDs2); */
+        let matchObjects = []
+        matchIDs2.forEach((value, index) => {
+            axios.get(
+                `https://europe.api.riotgames.com/lol/match/v5/matches/${matchIDs2[index]}?${constants.api_key}`
+            ).then((resp) => {
+                console.log(index);
+                matchObjects.push(resp.data)
+            })
+        })
+        /* matchObjects.push(matches)
+        console.log(matchObjects)
+        setMatches(matchObjects)
+        setShowMoreMatches(!showMoreMatches) */
     }
 
     if (isLoading == true && matches != null && runeJson != null) {
@@ -102,7 +109,7 @@ const MatchHistory = () => {
         getSec = parseFloat(getSec)
         let seconds = (60 * getSec).toFixed(0)
         let minutes = Math.floor(time / 60)
-        if(seconds < 10) {
+        if (seconds < 10) {
             seconds = `0${seconds}`
         }
 
@@ -123,9 +130,6 @@ const MatchHistory = () => {
             }
         }
 
-
-
-
         let itemImageArray = [
             userStats.item0,
             userStats.item1,
@@ -143,12 +147,12 @@ const MatchHistory = () => {
             }
         })
 
-        gameModes.forEach((value) => {
+        gameModes.forEach((value, index) => {
             if (value.gameMode == item.info.gameMode) {
                 /* console.log(("Hej")); */
                 gameMode = value.gameMode
                 if (value.gameMode == "CLASSIC") {
-                    item.info.queueId == 400 ? gameMode = "Normals" : gameMode = "Ranked Solo"
+                    item.info.queueId == 400 ? gameMode = gameModes[index].gameMode : gameMode = "Ranked Solo"
                 }
             }
 
@@ -270,6 +274,8 @@ const MatchHistory = () => {
         )
     }
 
+
+
     return (
         <View style={{ backgroundColor: theme.darkBlue, flex: 1 }}>
             {isLoading ? (
@@ -280,19 +286,28 @@ const MatchHistory = () => {
                         data={matches}
                         renderItem={matchRender}
                         keyExtractor={(item, index) => index}
-                        ListFooterComponent={() => {
+                       /*  ListFooterComponent={() => {
                             return (
-                                <TouchableOpacity style={{
-                                    backgroundColor: theme.lighterBlue,
-                                    borderRadius: 5,
-                                    height: 50,
-                                    justifyContent: 'center',
-                                    alignItems: "center"
-                                }} onPress={() => { fetchMoreMatches() }}>
-                                    <Text style={{ color: theme.white }}>More Matches...</Text>
-                                </TouchableOpacity>
+                                <View>
+                                    {showMoreMatches ? (
+                                        <></>
+                                    ) : (
+                                        <TouchableOpacity style={{
+                                            backgroundColor: theme.lighterBlue,
+                                            borderRadius: 5,
+                                            height: 50,
+                                            justifyContent: 'center',
+                                            alignItems: "center",
+                                            width: "80%",
+                                            alignSelf: "center"
+                                        }} onPress={() => { fetchMoreMatches() }}>
+                                            <Text style={{ color: theme.white }}>More Matches...</Text>
+                                        </TouchableOpacity>
+                                    )}
+                                </View>
+
                             )
-                        }}
+                        }} */
                     />
                 </View>
             )}
