@@ -66,7 +66,6 @@ const MatchHistory = () => {
     }
 
     function fetchMoreMatches() {
-        /* console.log(matchIDs2); */
         let matchObjects = []
         matchIDs2.forEach((value, index) => {
             axios.get(
@@ -76,10 +75,8 @@ const MatchHistory = () => {
                 matchObjects.push(resp.data)
             })
         })
-        /* matchObjects.push(matches)
-        console.log(matchObjects)
+        matchObjects = matches.concat(matchObjects)
         setMatches(matchObjects)
-        setShowMoreMatches(!showMoreMatches) */
     }
 
     if (isLoading == true && matches != null && runeJson != null) {
@@ -286,7 +283,7 @@ const MatchHistory = () => {
                         data={matches}
                         renderItem={matchRender}
                         keyExtractor={(item, index) => index}
-                       /*  ListFooterComponent={() => {
+                        ListFooterComponent={() => {
                             return (
                                 <View>
                                     {showMoreMatches ? (
@@ -307,7 +304,7 @@ const MatchHistory = () => {
                                 </View>
 
                             )
-                        }} */
+                        }}
                     />
                 </View>
             )}
