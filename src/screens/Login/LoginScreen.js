@@ -1,12 +1,13 @@
 import axios from 'axios'
 import React, { useState, useEffect, useContext } from 'react'
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, ImageBackground } from 'react-native'
 import { theme } from '../../theme'
 import styles from './styles'
 import { UserInfoContext, MasteryArrayContext } from '../../ProjectContext'
 import { constants } from '../../constants'
 import { useToast } from 'react-native-toast-notifications'
 import { ChampArrayContext } from '../../ProjectContext'
+import LoginButton from '../../components/LoginButton'
 
 
 const LoginScreen = ({ navigation }) => {
@@ -17,6 +18,8 @@ const LoginScreen = ({ navigation }) => {
     const { userInfo, setUserInfo } = useContext(UserInfoContext)
     const { setMasteryArray } = useContext(MasteryArrayContext)
     const { setChampArray } = useContext(ChampArrayContext)
+
+   
 
     useEffect(() => {
         axios.get(`http://ddragon.leagueoflegends.com/cdn/12.6.1/data/en_US/champion.json`)
@@ -76,6 +79,7 @@ const LoginScreen = ({ navigation }) => {
                     value={sumName}
                     onChangeText={setSumName}
                 />
+                <LoginButton onPress={() => login()} />
                 <TouchableOpacity style={styles.loginButton} onPress={() => {
                     login()
                 }}>
