@@ -318,7 +318,7 @@ const ChampDetails = ({ route, navigation }) => {
                             <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 5 }}>
                                 <View style={{ flex: 1, marginLeft: 3 }}>
                                     <Text style={styles.baseStatsText}>
-                                        AD: {champJson[champName].stats.attackdamage} - {Math.round(champJson[champName].stats.attackdamage + (champJson[champName].stats.attackdamageperlevel * 18))}
+                                        AD: {champJson[champName].stats.attackdamage} - {(champJson[champName].stats.attackdamage + (champJson[champName].stats.attackdamageperlevel * 18)).toFixed(0)}
                                     </Text>
                                     <Text style={styles.baseStatsText}>
                                         Attack range: {champJson[champName].stats.attackrange}
@@ -329,7 +329,7 @@ const ChampDetails = ({ route, navigation }) => {
                                 <View style={{ width: 15 }} />
                                 <View style={{ flex: 1 }}>
                                     <Text style={styles.baseStatsText}>
-                                        AD growth: {champJson[champName].stats.hpregen} - {champJson[champName].stats.hpregen + (champJson[champName].stats.hpregenperlevel * 18)}
+                                        AD growth: {champJson[champName].stats.hpregen} - {(champJson[champName].stats.hpregen + (champJson[champName].stats.hpregenperlevel * 18)).toFixed(1)}
                                     </Text>
                                     <Text style={styles.baseStatsText}>
                                         Attack speed: {champJson[champName].stats.attackspeed}
