@@ -89,7 +89,7 @@ const ChampDetails = ({ route, navigation }) => {
             }).then(() => {
                 setTimeout(() => {
                     setLoading(false)
-
+                    console.log(champJson);
                 }, 200)
             })
     }, [])
@@ -161,16 +161,28 @@ const ChampDetails = ({ route, navigation }) => {
                 </View>
                 <View style={{ marginHorizontal: 5, marginTop: 10 }}>
                     {/* Check if fields exists before displaying */}
-                    <Text style={styles.baseStatsText}>Cooldown: {spellInformation[selectedSpellIndex].cooldown} s</Text>
-                    <Text style={styles.baseStatsText}>Cost: {spellInformation[selectedSpellIndex].cost} mana</Text>
-                    <Text style={styles.baseStatsText}>Range: {spellInformation[selectedSpellIndex].range}</Text>
-                    <View style={{ marginTop: 15 }}>
-                        <Text style={{ color: theme.white, fontSize: 16 }}>Description</Text>
-                        <Text style={styles.baseStatsText}>{spellInformation[selectedSpellIndex].description}</Text>
-                    </View>
+                    {selectedSpellIndex == 4 ? (
+                        <View>
+                            <View style={{ marginTop: 15 }}>
+                                <Text style={{ color: theme.white, fontSize: 18 }}>Description</Text>
+                                <Text style={styles.baseStatsText}>{spellInformation[selectedSpellIndex].description}</Text>
+                            </View>
+                        </View>
+                    ) : (
+                        <View>
+                            <Text style={styles.baseStatsText}>Cooldown: {spellInformation[selectedSpellIndex].cooldown} s</Text>
+                            <Text style={styles.baseStatsText}>Cost: {spellInformation[selectedSpellIndex].cost} {champJson[champName].partype}</Text>
+                            <Text style={styles.baseStatsText}>Range: {spellInformation[selectedSpellIndex].range}</Text>
+                            <View style={{ marginTop: 15 }}>
+                                <Text style={{ color: theme.white, fontSize: 18 }}>Description</Text>
+                                <Text style={styles.baseStatsText}>{spellInformation[selectedSpellIndex].description}</Text>
+                            </View>
+                        </View>
+                    )}
+
 
                 </View>
-            </View>
+            </View >
         )
     }
 
@@ -219,10 +231,6 @@ const ChampDetails = ({ route, navigation }) => {
             ) : (
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                     <View>
-                        {/* <Image 
-                        source={require(`../../assets/champPassives/${champJson.passive.image.full}`)}
-                        style={{height: 50, width: 50}}
-                        /> */}
                         <View style={{ width: "90%", alignSelf: "center", marginTop: 20, flexDirection: "row" }}>
                             <View style={{ flex: 1 }}>
                                 <Image

@@ -80,11 +80,11 @@ const LoginScreen = ({ navigation }) => {
                     onChangeText={setSumName}
                 />
                 <LoginButton onPress={() => login()} />
-                <TouchableOpacity style={styles.loginButton} onPress={() => {
+                {/* <TouchableOpacity style={styles.loginButton} onPress={() => {
                     login()
                 }}>
                     <Text style={{ color: "white", fontSize: 18 }}>Find me</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         </View>
     )
