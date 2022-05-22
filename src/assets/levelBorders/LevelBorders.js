@@ -1,0 +1,25 @@
+
+
+export const LevelBorders = {
+    1: require("./theme-1-border.png"),
+    30: require("./theme-2-border.png"),
+    50: require("./theme-3-border.png"),
+    75: require("./theme-4-border.png"),
+    100: require("./theme-5-border.png"),
+    125: require("./theme-6-border.png"),
+    150: require("./theme-7-border.png"),
+    175: require("./theme-8-border.png"),
+    200: require("./theme-9-border.png"),
+    225: require("./theme-10-border.png"),
+    250: require("./theme-11-border.png"),
+    275: require("./theme-12-border.png"),
+    300: require("./theme-13-border.png"),
+    325: require("./theme-14-border.png"),
+    350: require("./theme-15-border.png"),
+    375: require("./theme-16-border.png"),
+    400: require("./theme-17-border.png"),
+    425: require("./theme-18-border.png"),
+    450: require("./theme-19-border.png"),
+    475: require("./theme-20-border.png"),
+    500: require("./theme-21-border.png"),
+}

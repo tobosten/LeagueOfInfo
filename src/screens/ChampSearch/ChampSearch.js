@@ -1,47 +1,46 @@
-import { View, Text, FlatList, TouchableOpacity, TextInput, Image, Button, ActivityIndicator } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, TextInput, Image, Button, ActivityIndicator, BackHandler } from 'react-native'
 import React, { useEffect, useContext, useState } from 'react'
 import { theme } from '../../theme'
 import axios from 'axios';
 import { ChampArrayContext } from '../../ProjectContext';
 import ChampionImages from '../../assets/ChampionImages';
 import styles from './styles';
+import { useIsFocused } from '@react-navigation/native';
 
 const ChampSearch = ({ navigation }) => {
 
-    /* 
-    Object.entries needed to loop through champ array with objects inside object
-    Object.entries(champArray.data).forEach(([key, value]) => {
-      console.log("Id:", value.key) 
-    }
-    */
-    const [searchField, setSearchField] = useState("")
+    const [searchText, setSearchText] = useState("")
     const [searchSelect, setSearchSelect] = useState(false)
     const [loading, setLoading] = useState(true)
 
+    const [searchResults, setSearchResults] = useState([])
+
     const { champArray, setChampArray } = useContext(ChampArrayContext)
+    const [championList, setChampionList] = useState([])
 
-    const testArray = [
-        { id: "Aatrox" },
-        { id: "Kalista" },
-        { id: "Akali" },
-        { id: "Evelynn" },
-        { id: "Rek'sai" },
-        { id: "Bel'veth" },
-        { id: "Kai'sa" }
-    ]
-
-    useEffect(async () => {
-        /* console.log(champArray); */
-        await axios.get(`http://ddragon.leagueoflegends.com/cdn/12.6.1/data/en_US/champion.json`)
-            .then((resp) => {
-                setChampArray(resp.data.data)
-            }).then(() => {
-                //delay to set champArray
-                setTimeout(() => {
-                    setLoading(false)
-                }, 1500)
-            })
+    useEffect(() => {
+        populateChampionList()
     }, [])
+    
+
+    useEffect(() => {
+        /* runs populateChampionList() when going back to this screen */
+        const unsubscribe = navigation.addListener("focus", () => {
+            populateChampionList()
+        })
+        return unsubscribe
+    }, [navigation])
+
+    const populateChampionList = () => {
+        setChampionList(Object.values(champArray))
+    }
+
+    if (loading == true) {
+        if (championList != null) {
+            setLoading(false)
+        }
+    }
+
 
     const renderItem = ({ item }) => {
 
@@ -51,11 +50,13 @@ const ChampSearch = ({ navigation }) => {
                     console.log("Selected champ:", item.id)
                     navigation.navigate("ChampDetails", {
                         champName: item.id,
-                        champId: item.key
+                        champId: item.key,
+                        onGoBack: () => populateChampionList()
                     })
+                    /* setChampionList(Object.values(champArray)) */
                 }}>
                     <Image
-                        source={ChampionImages.Aatrox}  /* ${item.id}  not working?*/
+                        source={ChampionImages[item.id]}
                         style={styles.renderItemImage}
                     />
                 </TouchableOpacity>
@@ -64,21 +65,39 @@ const ChampSearch = ({ navigation }) => {
         )
     }
 
+
+    const searchFunction = () => {
+        /* save searched champs in new array, then replace current champ array with that. */
+        /*  console.log(champArray.Aatrox.id); */
+        let newcArr = Object.values(champArray)
+        let searchedChamps = []
+        newcArr.forEach((item, index) => {
+            if (item.id.indexOf(searchText) in newcArr) {
+                console.log(item.id);
+                searchedChamps.push(item)
+            }
+        })
+        /* console.log(searchedChamps); */
+        setChampionList(searchedChamps)
+        setSearchText("")
+    }
+
     return (
         <View style={styles.mainContainer}>
             <View style={styles.topContainer}>
                 <View style={styles.inputContainer}>
                     <TextInput
-                        value={searchField}
-                        onChangeText={setSearchField}
+                        value={searchText}
+                        onChangeText={setSearchText}
                         style={styles.searchField}
                         onFocus={() => setSearchSelect(true)}
-                        onTouchCancel={() => setSearchField(false)}
+                        onTouchCancel={() => setSearchText(false)}
                     />
                     <View style={styles.dividerView} />
                     {searchSelect ? (
                         <TouchableOpacity style={styles.magGlass} onPress={() => {
                             //navigate to champ info
+                            searchFunction()
                         }}>
                             <Image
                                 source={require("../../assets/icons/selectedSearch.gif")}
@@ -107,13 +126,13 @@ const ChampSearch = ({ navigation }) => {
                     </View>
                 ) : (
                     <FlatList
-                        data={Object.values(champArray)}
+                        data={championList}
                         renderItem={renderItem}
                         keyExtractor={(item, index) => index}
                         numColumns={4}
                         ListEmptyComponent={() => (
                             <View>
-                                <Text style={{ color: "white" }}>Api Not Working</Text>
+                                {/* <Text style={{ color: "white" }}>Api Not Working</Text> */}
                             </View>
                         )}
                     />

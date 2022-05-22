@@ -5,3 +5,67 @@ git commit -m "first commit"
 git branch -M main
 git remote add origin https://github.com/Erizium/examRep.git
 git push -u origin main
+
+
+TODO: 
+    SelectedAbility:
+        Check if field exists like cd, cost and range etc.
+    Pick region: Picker that changes context inside constants?
+    Proper image for champ mastery when it's 0.
+    Match array not fetching in order? Validate.
+    Fix unique champs, ex. Vladimir.
+
+Summoner spells:
+    Summoner1Id / summoner2Id: 
+        1 = Cleanse 
+        4 = Flash  
+        3 = Exhaust 
+        7 = Heal
+        10 = Ghost 
+        11 = Smite 
+        12 = Teleport
+        14 = Ignite 
+        21 = Barrier  
+
+     
+queueId: 420 = Ranked
+queueId 400 = Normal Draft
+
+{
+    gameCreation	1651001174000
+    gameDuration	1360
+    gameEndTimestamp	1651002570540
+    gameId	5843136985
+    gameMode	"CLASSIC"
+    gameName	"teambuilder-match-5843136985"
+    gameStartTimestamp	1651001210110
+    gameType	"MATCHED_GAME"  
+    gameVersion	"12.7.433.4138"
+    mapId	11
+}
+
+
+
+Maybe?:
+    Change border colors in Summoner screen to color of current rank.
+
+Bug:
+    Unranked image not showing.
+    
+
+Endpoints: 
+    ProfileIcon: http://ddragon.leagueoflegends.com/cdn/12.7.1/img/profileicon/685.png
+    IconArray: http://ddragon.leagueoflegends.com/cdn/12.7.1/data/en_US/profileicon.json
+    SummonerSpells: https://ddragon.leagueoflegends.com/cdn/12.8.1/data/en_US/summoner.json
+    Item Images: https://ddragon.leagueoflegends.com/cdn/12.8.1/img/item/1004.png 
+    RuneIds: https://ddragon.leagueoflegends.com/cdn/10.16.1/data/en_US/runesReforged.json
+
+
+Ezuyi:
+    "id": "vmarhJ_lwQwBwA1Uom0LpB8B_l4t7IxbsK1Y1l8H0SKWoCE",    
+    "accountId": "m5sjy8cSPg_K1dfEOBp5YQY9lFem-h-xY88KgH1jehJgB6w",
+    "puuid": "wjL06dfzQsgxCb1QeHfZezh6BKNckQxdllp2p4y13tQ70Iqn-us3KeqOVJU3leoaZhhugqGGAF-W-g",
+    "name": "Ezuyi",
+    "profileIconId": 4498,
+    "revisionDate": 1651267925000,
+    "summonerLevel": 334
