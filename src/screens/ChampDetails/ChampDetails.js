@@ -90,13 +90,13 @@ const ChampDetails = ({ route, navigation }) => {
             }).then(() => {
                 setTimeout(() => {
                     setLoading(false)
-                    console.log(champJson);
+                    /* console.log(champJson); */
                 }, 200)
             })
     }, [])
 
     if (spellInformation != null) {
-        console.log(spellInformation);
+        /* console.log(spellInformation); */
     }
 
 
@@ -117,7 +117,7 @@ const ChampDetails = ({ route, navigation }) => {
                         source={{ uri: uri }}
                         /*  source={{ uri: uri }} */
                         style={styles.abilityImage}
-                        imageStyle={{ borderRadius: 10}}
+                        imageStyle={{ borderRadius: 10 }}
                     >
                         <View style={{ backgroundColor: theme.darkBlue, width: 15, heigth: 15, margin: 3, borderRadius: 2, borderWidth: .5, borderColor: theme.white }}>
                             <Text style={{
@@ -137,6 +137,8 @@ const ChampDetails = ({ route, navigation }) => {
     }
 
     function selectedSpellView() {
+
+        let description = spellInformation[selectedSpellIndex].description.replace(/<br>/g, "\n")
 
         return (
             <View style={{
@@ -177,7 +179,7 @@ const ChampDetails = ({ route, navigation }) => {
                             <Text style={styles.baseStatsText}>Range: {spellInformation[selectedSpellIndex].range}</Text>
                             <View style={{ marginTop: 15 }}>
                                 <Text style={{ color: theme.white, fontSize: 18 }}>Description</Text>
-                                <Text style={styles.baseStatsText}>{spellInformation[selectedSpellIndex].description}</Text>
+                                <Text style={styles.baseStatsText}>{description}</Text>
                             </View>
                         </View>
                     )}
@@ -290,7 +292,7 @@ const ChampDetails = ({ route, navigation }) => {
                                     renderItem={abilityRenderItem}
                                     keyExtractor={(item, index) => index}
                                     numColumns={3}
-                                    style={{ alignSelf: "center"}}
+                                    style={{ alignSelf: "center" }}
                                 />
                             </View>
                         </View >
@@ -299,60 +301,60 @@ const ChampDetails = ({ route, navigation }) => {
                         <View>
                             {selectedSpellView()}
                             <View style={styles.baseStatsContainer}>
-                            <Text style={styles.baseStatsTitle}>Base Stats</Text>
-                            <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 5 }}>
-                                <View style={{ flex: 1, marginLeft: 3 }}>
-                                    <Text style={styles.baseStatsText}>
-                                        Health: {champJson[champName].stats.hp} - {Math.round(champJson[champName].stats.hp + (champJson[champName].stats.hpperlevel * 18))}
-                                    </Text>
-                                    <Text style={styles.baseStatsText}>
-                                        Mana: {champJson[champName].stats.mp} - {Math.round(champJson[champName].stats.mp + (champJson[champName].stats.mpperlevel * 18))}
-                                    </Text>
-                                    <Text style={styles.baseStatsText}>
-                                        Armor: {champJson[champName].stats.armor} - {Math.round(champJson[champName].stats.armor + (champJson[champName].stats.armorperlevel * 18))}
-                                    </Text>
-                                    <Text style={styles.baseStatsText}>
-                                        Move. speed: {champJson[champName].stats.movespeed}
-                                    </Text >
+                                <Text style={styles.baseStatsTitle}>Base Stats</Text>
+                                <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 5 }}>
+                                    <View style={{ flex: 1, marginLeft: 3 }}>
+                                        <Text style={styles.baseStatsText}>
+                                            Health: {champJson[champName].stats.hp} - {Math.round(champJson[champName].stats.hp + (champJson[champName].stats.hpperlevel * 18))}
+                                        </Text>
+                                        <Text style={styles.baseStatsText}>
+                                            Mana: {champJson[champName].stats.mp} - {Math.round(champJson[champName].stats.mp + (champJson[champName].stats.mpperlevel * 18))}
+                                        </Text>
+                                        <Text style={styles.baseStatsText}>
+                                            Armor: {champJson[champName].stats.armor} - {Math.round(champJson[champName].stats.armor + (champJson[champName].stats.armorperlevel * 18))}
+                                        </Text>
+                                        <Text style={styles.baseStatsText}>
+                                            Move. speed: {champJson[champName].stats.movespeed}
+                                        </Text >
 
+                                    </View>
+                                    <View style={{ width: 15 }} />
+                                    <View style={{ flex: 1, marginLeft: 3 }}>
+                                        <Text style={styles.baseStatsText}>
+                                            Health regen: {champJson[champName].stats.hpregen} - {Math.round(champJson[champName].stats.hpregen + (champJson[champName].stats.hpregenperlevel * 18))}
+                                        </Text>
+                                        <Text style={styles.baseStatsText}>
+                                            Mana regen: {champJson[champName].stats.mpregen} - {Math.round(champJson[champName].stats.mpregen + (champJson[champName].stats.mpregenperlevel * 18))}
+                                        </Text>
+                                        <Text style={styles.baseStatsText}>
+                                            Magic Resist: {champJson[champName].stats.spellblock} - {Math.round(champJson[champName].stats.spellblock + (champJson[champName].stats.spellblockperlevel * 18))}
+                                        </Text>
+
+                                    </View>
                                 </View>
-                                <View style={{ width: 15 }} />
-                                <View style={{ flex: 1, marginLeft: 3 }}>
-                                    <Text style={styles.baseStatsText}>
-                                        Health regen: {champJson[champName].stats.hpregen} - {Math.round(champJson[champName].stats.hpregen + (champJson[champName].stats.hpregenperlevel * 18))}
-                                    </Text>
-                                    <Text style={styles.baseStatsText}>
-                                        Mana regen: {champJson[champName].stats.mpregen} - {Math.round(champJson[champName].stats.mpregen + (champJson[champName].stats.mpregenperlevel * 18))}
-                                    </Text>
-                                    <Text style={styles.baseStatsText}>
-                                        Magic Resist: {champJson[champName].stats.spellblock} - {Math.round(champJson[champName].stats.spellblock + (champJson[champName].stats.spellblockperlevel * 18))}
-                                    </Text>
+                                <Text style={[styles.baseStatsTitle, { fontSize: 18, marginTop: 10 }]}>Attack stats</Text>
+                                <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 5 }}>
+                                    <View style={{ flex: 1, marginLeft: 3 }}>
+                                        <Text style={styles.baseStatsText}>
+                                            AD: {champJson[champName].stats.attackdamage} - {(champJson[champName].stats.attackdamage + (champJson[champName].stats.attackdamageperlevel * 18)).toFixed(0)}
+                                        </Text>
+                                        <Text style={styles.baseStatsText}>
+                                            Attack range: {champJson[champName].stats.attackrange}
+                                        </Text >
 
+
+                                    </View>
+                                    <View style={{ width: 15 }} />
+                                    <View style={{ flex: 1 }}>
+                                        <Text style={styles.baseStatsText}>
+                                            AD growth: {champJson[champName].stats.hpregen} - {(champJson[champName].stats.hpregen + (champJson[champName].stats.hpregenperlevel * 18)).toFixed(1)}
+                                        </Text>
+                                        <Text style={styles.baseStatsText}>
+                                            Attack speed: {champJson[champName].stats.attackspeed}
+                                        </Text>
+                                    </View>
                                 </View>
                             </View>
-                            <Text style={[styles.baseStatsTitle, { fontSize: 18, marginTop: 10 }]}>Attack stats</Text>
-                            <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 5 }}>
-                                <View style={{ flex: 1, marginLeft: 3 }}>
-                                    <Text style={styles.baseStatsText}>
-                                        AD: {champJson[champName].stats.attackdamage} - {(champJson[champName].stats.attackdamage + (champJson[champName].stats.attackdamageperlevel * 18)).toFixed(0)}
-                                    </Text>
-                                    <Text style={styles.baseStatsText}>
-                                        Attack range: {champJson[champName].stats.attackrange}
-                                    </Text >
-
-
-                                </View>
-                                <View style={{ width: 15 }} />
-                                <View style={{ flex: 1 }}>
-                                    <Text style={styles.baseStatsText}>
-                                        AD growth: {champJson[champName].stats.hpregen} - {(champJson[champName].stats.hpregen + (champJson[champName].stats.hpregenperlevel * 18)).toFixed(1)}
-                                    </Text>
-                                    <Text style={styles.baseStatsText}>
-                                        Attack speed: {champJson[champName].stats.attackspeed}
-                                    </Text>
-                                </View>
-                            </View>
-                        </View>
                         </View>
 
                     }
