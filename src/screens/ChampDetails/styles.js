@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         width: 70,
         alignItems: "center",
         justifyContent: 'center',
-        marginHorizontal: 10,
+        marginHorizontal: 15,
         marginVertical: 10
     },
     abilityText: {
@@ -56,13 +56,15 @@ const styles = StyleSheet.create({
         height: 70,
         width: 70,
         backgroundColor: "gray",
+        borderRadius: 10,
     },
 
     //base stats
     baseStatsContainer: {
-        width: "100%",
+        width: "90%",
+        alignSelf: "center",
         backgroundColor: theme.mediumBlue,
-        marginTop: 20,
+        marginBottom: 20,
         borderRadius: 5,
         padding: 15
     },

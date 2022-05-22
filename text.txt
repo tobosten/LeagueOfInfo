@@ -9,13 +9,11 @@ git push -u origin main
 
 TODO: 
     SelectedAbility:
-        Passive info not showing.
         Check if field exists like cd, cost and range etc.
-    Decrease text size in champ details, title to 20px etc.
-    Download new rank gifs with higher fps from bookmark.
     Pick region: Picker that changes context inside constants?
     Proper image for champ mastery when it's 0.
     Match array not fetching in order? Validate.
+    Fix unique champs, ex. Vladimir.
 
 Summoner spells:
     Summoner1Id / summoner2Id: 

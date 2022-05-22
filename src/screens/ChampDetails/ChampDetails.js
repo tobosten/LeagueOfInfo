@@ -13,11 +13,10 @@ import { MasteryImages } from '../../assets/MasteryImages'
 const ChampDetails = ({ route, navigation }) => {
 
     useEffect(() => {
-        //fix later
-        LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
+
     }, [])
 
-    
+
 
     /* let champName = "Syndra" */
     const { champName, champId } = route.params
@@ -107,7 +106,7 @@ const ChampDetails = ({ route, navigation }) => {
 
         return (
             <View style={styles.abilityView}>
-                <TouchableOpacity style={[{ borderWidth: 3, borderColor: theme.mediumBlue, borderRadius: 10 }, styles.shadow]}
+                <TouchableOpacity style={[{ borderWidth: 1, borderColor: theme.orange, borderRadius: 10 }, styles.shadow]}
                     onPress={() => {
                         setSelectedSpellIndex(index)
                         //not updating in time to show ability
@@ -118,6 +117,7 @@ const ChampDetails = ({ route, navigation }) => {
                         source={{ uri: uri }}
                         /*  source={{ uri: uri }} */
                         style={styles.abilityImage}
+                        imageStyle={{ borderRadius: 10}}
                     >
                         <View style={{ backgroundColor: theme.darkBlue, width: 15, heigth: 15, margin: 3, borderRadius: 2, borderWidth: .5, borderColor: theme.white }}>
                             <Text style={{
@@ -142,9 +142,9 @@ const ChampDetails = ({ route, navigation }) => {
             <View style={{
                 padding: 15,
                 backgroundColor: theme.mediumBlue,
-                width: "100%",
+                width: "90%",
                 alignSelf: "center",
-                marginVertical: 15,
+                marginBottom: 20,
                 borderRadius: 5
             }}>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -223,6 +223,7 @@ const ChampDetails = ({ route, navigation }) => {
     //img size
     let height = 300
     let width = height * 0.55
+
     return (
         <View style={{ height: "100%", width: "100%", backgroundColor: theme.darkBlue }}>
             {loading ? (
@@ -231,60 +232,73 @@ const ChampDetails = ({ route, navigation }) => {
                         style={{}} />
                 </View>
             ) : (
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                    <View>
-                        <View style={{ width: "90%", alignSelf: "center", marginTop: 20, flexDirection: "row" }}>
-                            <View style={{ flex: 1 }}>
-                                <Image
-                                    source={{ uri: `http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champName}_0.jpg` }}
-                                    style={{ height: height, width: width, borderRadius: 5 }}
-                                />
-                            </View>
-                            <View style={{ flex: 1, justifyContent: "center", backgroundColor: theme.mediumBlue, borderRadius: 5 }}>
-                                <View style={{ justifyContent: "center", alignItems: "center" }}>
-                                    <View style={[{
-                                        alignItems: "center",
-                                        backgroundColor: theme.mediumBlue,
-                                        padding: 10,
-                                        borderRadius: 5
-                                    },
-                                    styles.shadow]}>
-                                        <Text style={{ fontSize: 24, color: theme.white }}>{champName}</Text>
-                                        <Text style={{ color: theme.white, fontSize: 16 }}>
-                                            {champJson[champName].title.charAt(0).toUpperCase() + champJson[champName].title.slice(1)}
-                                        </Text>
-                                    </View>
-                                    <View style={{ marginTop: 20, width: "100%", alignItems: "center" }}>
-                                        {checkMasteryTitle()}
-                                        {checkMastery()}
-                                        <Text style={{ color: theme.white }}>
-                                            {champMastery.championPoints > 0 ? `${champMastery.championPoints} points` : "Not played"}</Text>
+                <FlatList
+                    data={[]}
+                    renderItem={() => undefined}
+                    ListHeaderComponent={
+                        <View>
+                            <View style={{ width: "90%", alignSelf: "center", marginTop: 20, flexDirection: "row" }}>
+                                <View style={{ flex: 1 }}>
+                                    <Image
+                                        source={{ uri: `http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champName}_0.jpg` }}
+                                        style={{ height: height, width: width, borderRadius: 5, borderColor: theme.orange, borderWidth: .7 }}
+                                    />
+                                </View>
+                                <View style={{ flex: 1, justifyContent: "center", backgroundColor: theme.mediumBlue, borderRadius: 5 }}>
+                                    <View style={{ justifyContent: "center", alignItems: "center" }}>
+                                        <View style={[{
+                                            alignItems: "center",
+                                            backgroundColor: theme.mediumBlue,
+                                            padding: 10,
+                                            borderRadius: 5,
+                                            borderWidth: 1,
+                                            borderColor: theme.darkBlue
+                                        },
+                                        styles.shadow]}>
+                                            <Text style={{ fontSize: 24, color: theme.white }}>{champName}</Text>
+                                            <Text style={{ color: theme.white, fontSize: 16 }}>
+                                                {champJson[champName].title.charAt(0).toUpperCase() + champJson[champName].title.slice(1)}
+                                            </Text>
+                                        </View>
+                                        <View style={{ marginTop: 20, width: "100%", alignItems: "center" }}>
+                                            {checkMasteryTitle()}
+                                            {checkMastery()}
+                                            <Text style={{ color: theme.white }}>
+                                                {champMastery.championPoints > 0 ? `Mastery: ${champMastery.championPoints}` : "Not played"}</Text>
+                                        </View>
                                     </View>
                                 </View>
                             </View>
-                        </View>
-                        <View style={styles.loreMainContainer}>
-                            <View style={styles.loreContainer}>
-                                <Text style={styles.loreTitle}>Lore</Text>
-                                <Text style={{ color: theme.white }}>{champJson[champName].lore}</Text>
+                            <View style={styles.loreMainContainer}>
+                                <View style={styles.loreContainer}>
+                                    <Text style={styles.loreTitle}>Lore</Text>
+                                    <Text style={{ color: theme.white }}>{champJson[champName].lore}</Text>
+                                </View>
                             </View>
-                        </View>
-                    </View >
-                    <View style={{ width: "90%", alignSelf: "center", marginTop: 20, marginBottom: 20 }}>
-                        <View style={styles.mainAbilityContainer}>
-                            <Text style={{ color: theme.white, marginBottom: 10, fontSize: 24 }}>Abilities</Text>
-                            <View style={styles.abilitiesContainer}>
+
+                            <View style={{
+                                borderWidth: 1,
+                                borderColor: theme.orange,
+                                width: "90%",
+                                borderRadius: 5,
+                                backgroundColor: theme.mediumBlue,
+                                marginVertical: 20,
+                                alignSelf: "center",
+                            }}>
                                 <FlatList
                                     data={Object.values(spellInformation)}
                                     renderItem={abilityRenderItem}
                                     keyExtractor={(item, index) => index}
                                     numColumns={3}
-
+                                    style={{ alignSelf: "center"}}
                                 />
                             </View>
-                        </View>
-                        {selectedSpellView()}
-                        <View style={styles.baseStatsContainer}>
+                        </View >
+                    }
+                    ListFooterComponent={
+                        <View>
+                            {selectedSpellView()}
+                            <View style={styles.baseStatsContainer}>
                             <Text style={styles.baseStatsTitle}>Base Stats</Text>
                             <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 5 }}>
                                 <View style={{ flex: 1, marginLeft: 3 }}>
@@ -339,11 +353,12 @@ const ChampDetails = ({ route, navigation }) => {
                                 </View>
                             </View>
                         </View>
-                    </View>
-                </ScrollView>
-            )
-            }
-        </View >
+                        </View>
+
+                    }
+                />
+            )}
+        </View>
     )
 }
 
