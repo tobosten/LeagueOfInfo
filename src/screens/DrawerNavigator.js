@@ -19,13 +19,14 @@ const DrawerNavigator = ({ navigation }) => {
     <Drawer.Navigator
       screenOptions={{
         drawerStyle: { backgroundColor: theme.darkBlue }, drawerLabelStyle: { color: theme.white },
-        drawerInactiveBackgroundColor: theme.mediumBlue
+        drawerInactiveBackgroundColor: theme.mediumBlue,
+        headerTintColor: theme.white
       }}
     >
       <Drawer.Screen name="Summoner" component={SummonerScreen}
         options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" }, headerTitle: "Summoner" }} />
       <Drawer.Screen name="Champions" component={ChampSearch}
-        options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" }, headerTitle: "Champions" }} />
+        options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" }, headerTitle: "Champions"}} />
       <Drawer.Screen name="MatchHistory" component={MatchHistory}
         options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" }, headerTitle: "Match History" }} />
     </Drawer.Navigator>

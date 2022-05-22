@@ -17,6 +17,8 @@ const ChampDetails = ({ route, navigation }) => {
         LogBox.ignoreLogs(["VirtualizedLists should never be nested"])
     }, [])
 
+    
+
     /* let champName = "Syndra" */
     const { champName, champId } = route.params
     const [loading, setLoading] = useState(true)

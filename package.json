@@ -12,6 +12,7 @@
     "@react-navigation/drawer": "^6.4.1",
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/native-stack": "^6.6.2",
+    "@types/react-native": "^0.67.7",
     "axios": "^0.26.1",
     "expo": "~44.0.2",
     "expo-splash-screen": "~0.14.1",

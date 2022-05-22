@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Button, TouchableOpacity, Text, Image, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { theme } from './theme';
@@ -14,7 +14,7 @@ import DrawerNavigator from './screens/DrawerNavigator';
 
 const Stack = createNativeStackNavigator()
 
-export default function App() {
+export default function App({ navigation }) {
   return (
     <ProjectContext>
       <ToastProvider
@@ -27,9 +27,12 @@ export default function App() {
             <Stack.Screen name="Login" component={LoginScreen}
               options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" } }} />
             <Stack.Screen name="ChampSearch" component={ChampSearch}
-              options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" }, headerTitle: "Champion Search" }} />
+              options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" }, headerTitle: "Champion Search", headerTintColor: theme.white }} />
             <Stack.Screen name="ChampDetails" component={ChampDetails}
-              options={{ headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue }, headerTitleStyle: { color: "white" }, headerTitle: "Champion Search" }} />
+              options={{
+                headerTitleAlign: "center", headerStyle: { backgroundColor: theme.darkBlue },
+                headerTitleStyle: { color: "white" }, headerTitle: "Champion Details", headerTintColor: theme.white,
+              }} />
             <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} options={{ headerShown: false }} />
           </Stack.Navigator>
         </NavigationContainer>

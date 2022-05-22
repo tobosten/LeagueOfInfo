@@ -75,7 +75,7 @@ const MatchHistory = () => {
                 matchObjects.push(resp.data)
             })
         })
-        matchObjects = matches.concat(matchObjects)
+        matchObjects = matches.concat(matchObjects) /* currently gets the same matches a seconds time */
         setMatches(matchObjects)
     }
 
