@@ -12,6 +12,7 @@ import { RankBorders } from '../../assets/rankBorders/RankBorders';
 import { MasteryImages } from '../../assets/MasteryImages'
 import { LevelBorders } from "../../assets/levelBorders/LevelBorders"
 import ProfileLevelBorder from '../../components/ProfileLevelBorder';
+import MostPlayed from '../../components/MostPlayed';
 
 
 const SummonerScreen = () => {
@@ -22,7 +23,7 @@ const SummonerScreen = () => {
   const { champArray } = useContext(ChampArrayContext)
   const { masteryArray } = useContext(MasteryArrayContext)
   const [rankedStats, setRankedStats] = useState(null)
-  const [mostPlayed, setMostPlayed] = useState([])
+  /* const [mostPlayed, setMostPlayed] = useState([]) */
 
   useEffect(() => {
     if (isLoading == true) {
@@ -47,34 +48,18 @@ const SummonerScreen = () => {
               }
             )
           }
-
-          axios.get(
-            `https://euw1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${userInfo.id}?${constants.api_key}`
-          ).then((resp) => {
-            let data = { one: resp.data[0].championId, two: resp.data[1].championId, three: resp.data[2].championId }
-            let array = []
-
-            Object.values(champArray).forEach((value) => {
-              if (data.two == value.key) { array.push({ id: value.id, key: value.key }) }
-            })
-            Object.values(champArray).forEach((value) => {
-              if (data.one == value.key) { array.push({ id: value.id, key: value.key }) }
-            })
-            Object.values(champArray).forEach((value) => {
-              if (data.three == value.key) { array.push({ id: value.id, key: value.key }) }
-            })
-            setMostPlayed(array)
-            setIsLoading(!isLoading)
-          })
         })
       }
     }
   }, [])
 
+  if (isLoading == true) {
+    if (rankedStats != null && masteryArray != null && champArray) {
+      setIsLoading(false)
+    }
+  }
+
   function profileComponent() {
-
-
-
     return (
       <View>
         <View style={{ alignItems: "center", marginTop: 30 }}>
@@ -152,14 +137,12 @@ const SummonerScreen = () => {
 
   function rankImage() {
     let img = rankEmblems[rankedStats.tier]
-    if (rankedStats.tier == "Unranked") {
-    }
     return (
       <View>
         {rankedStats.tier == "Unranked" ? (
-          <Image 
+          <Image
             source={require("../../assets/emblems/unrankedEmblem.png")}
-            style={{height: 100, width: 140}}
+            style={{ height: 100, width: 140 }}
           />
         ) : (
           <Image
@@ -180,6 +163,44 @@ const SummonerScreen = () => {
       <Text style={styles.rankText}>{text}</Text>
     )
 
+  }
+
+  function mostPlayedChampion() {
+    let champName = ""
+    Object.values(champArray).forEach((value, index) => {
+      if (value.key == masteryArray[0].championId) {
+        champName = value.id
+      }
+    })
+
+    let mlvl = masteryArray[0].championLevel
+    let source = ""
+    /* console.log(masteryArray[0]); */
+    mlvl == 0 ? source = MasteryImages.mastery0 : null;
+    mlvl == 1 ? source = MasteryImages.mastery1 : null;
+    mlvl == 2 ? source = MasteryImages.mastery2 : null;
+    mlvl == 3 ? source = MasteryImages.mastery3 : null;
+    mlvl == 4 ? source = MasteryImages.mastery4 : null;
+    mlvl == 5 ? source = MasteryImages.mastery5 : null;
+    mlvl == 6 ? source = MasteryImages.mastery6 : null;
+    mlvl == 7 ? source = MasteryImages.mastery7 : null;
+
+    let width = 350
+    let height = width * 0.57
+    return (
+      <View style={{ alignSelf: "center", marginVertical: 5 }}>
+        <ImageBackground
+          source={{ uri: `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champName}_0.jpg` }}
+          style={{ width: width, height: height }}
+        >
+          <Text style={{ color: theme.white, fontSize: 24, marginLeft: 10 }}>{champName}</Text>
+          <Image
+            source={source}
+            style={{ height: 60, width: 60, marginLeft: 10 }}
+          />
+        </ImageBackground>
+      </View>
+    )
   }
 
 
@@ -206,24 +227,10 @@ const SummonerScreen = () => {
               </View>
             </View>
           </View>
-
-          <View style={[styles.mostPlayedContainer, styles.shadow]}>
-            <Text style={styles.highestMasteryText}>Highest Mastery</Text>
-            <View style={{
-              marginBottom: 10,
-              width: "90%",
-              alignItems: "center",
-              paddingVertical: 10,
-            }}>
-              <FlatList
-                data={mostPlayed}
-                renderItem={mostPlayedRender}
-                keyExtractor={(item, index) => index}
-                horizontal={true}
-                style={{}}
-              />
-            </View>
+          <View style={{}}>
+            <MostPlayed />
           </View>
+
         </View>
       )}
     </ScrollView>

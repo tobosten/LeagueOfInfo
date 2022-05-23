@@ -71,11 +71,10 @@ const MatchHistory = () => {
             axios.get(
                 `https://europe.api.riotgames.com/lol/match/v5/matches/${matchesID[i]}?${constants.api_key}`
             ).then((resp) => {
-                console.log(i);
+                /* console.log(i); */
                 matchObjects.push(resp.data)
             })
         }
-        console.log("ids2:", matchObjects);
         matchObjects = first.concat(matchObjects) //currently gets the same matches a seconds time
         setMatches(matchObjects)
 
