@@ -156,10 +156,19 @@ const SummonerScreen = () => {
     }
     return (
       <View>
-        <Image
-          source={rankedStats.tier == "Unranked" ? require("../../assets/emblems/unrankedEmblem.png") : img}
-          style={{ height: 135, width: 100 }}
-        />
+        {rankedStats.tier == "Unranked" ? (
+          <Image 
+            source={require("../../assets/emblems/unrankedEmblem.png")}
+            style={{height: 100, width: 140}}
+          />
+        ) : (
+          <Image
+            source={img}
+            style={{ height: 135, width: 100 }}
+          />
+        )}
+
+
       </View>
     )
   }

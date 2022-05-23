@@ -34,7 +34,6 @@ const ChampDetails = ({ route, navigation }) => {
     useEffect(() => {
         axios.get(`https://ddragon.leagueoflegends.com/cdn/12.5.1/data/en_US/champion/${champName}.json`)
             .then((resp) => {
-                /* console.log(resp.data.data.Jhin); */
                 let champObject = resp.data.data
                 setChampJson(resp.data.data)
                 setSpellInformation([
@@ -73,8 +72,6 @@ const ChampDetails = ({ route, navigation }) => {
                         description: champObject[champName].passive.description
                     },
                 ])
-
-                /* console.log(masteryArray) */
                 masteryArray.forEach((value) => {
                     if (champObject[champName].key == value.championId) {
 
@@ -90,14 +87,9 @@ const ChampDetails = ({ route, navigation }) => {
             }).then(() => {
                 setTimeout(() => {
                     setLoading(false)
-                    /* console.log(champJson); */
                 }, 200)
             })
     }, [])
-
-    if (spellInformation != null) {
-        /* console.log(spellInformation); */
-    }
 
 
     const abilityRenderItem = ({ item, index }) => {
@@ -138,7 +130,9 @@ const ChampDetails = ({ route, navigation }) => {
 
     function selectedSpellView() {
 
-        let description = spellInformation[selectedSpellIndex].description.replace(/<br>/g, "\n")
+        /* Does not working for Syndra and more? */
+        let description = spellInformation[selectedSpellIndex].description.replace(/<br>/gi, "\n")
+    
 
         return (
             <View style={{

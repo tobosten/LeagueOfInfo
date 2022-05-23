@@ -17,28 +17,24 @@ const MatchHistory = () => {
     const [gameModes, setGameModes] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [runeJson, setRunesJson] = useState(null)
-    const [matches, setMatches] = useState([])
+
     const [showMoreMatches, setShowMoreMatches] = useState(false)
+    const [matches, setMatches] = useState([])
+    const [matchesID, setMatchesID] = useState([])
 
-    let matchIDs = []
-    const [matchIDs2, setMatchIDs2] = useState([])
-    let fullMatchObjects = []
 
-    useEffect(async () => {
-        await axios.get(
+    useEffect(() => {
+        axios.get(
             `https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/${userInfo.puuid}/ids?start=0&count=20&${constants.api_key}`
         ).then((resp) => {
-            resp.data.forEach((value) => {
-                matchIDs.push(value)
-            })
-            const halfWayIndex = Math.ceil(matchIDs.length / 2)
-            matchIDs = matchIDs.slice(0, halfWayIndex)
-            setMatchIDs2(matchIDs.slice(1, halfWayIndex))
-            /* loop axios.get on 10 last games. */
-            for (let i = 0; i < matchIDs.length; i++) {
-                fetchMatches(i)
+            let data = resp.data
+            let matches1Objects = []
+            setMatchesID(data)
+            for (let i = 0; i < 10; i++) {
+                fetchMatches(data, i, matches1Objects)
             }
-            setMatches(fullMatchObjects)
+
+            setMatches(matches1Objects)
 
             setTimeout(() => {
                 axios.get(
@@ -57,26 +53,31 @@ const MatchHistory = () => {
         })
     }, [])
 
-    async function fetchMatches(id) {
-        await axios.get(
-            `https://europe.api.riotgames.com/lol/match/v5/matches/${matchIDs[id]}?${constants.api_key}`
+    function fetchMatches(data, i, matches1Objects) {
+        axios.get(
+            `https://europe.api.riotgames.com/lol/match/v5/matches/${data[i]}?${constants.api_key}`
         ).then((resp) => {
-            fullMatchObjects.push(resp.data)
+            /* fullMatchObjects.push(resp.data) */
+            matches1Objects.push(resp.data)
         })
+        return matches1Objects
     }
 
     function fetchMoreMatches() {
+
         let matchObjects = []
-        matchIDs2.forEach((value, index) => {
+        let first = [...matches]
+        for (let i = 10; i < 20; i++) {
             axios.get(
-                `https://europe.api.riotgames.com/lol/match/v5/matches/${matchIDs2[index]}?${constants.api_key}`
+                `https://europe.api.riotgames.com/lol/match/v5/matches/${matchesID[i]}?${constants.api_key}`
             ).then((resp) => {
-                console.log(index);
+                console.log(i);
                 matchObjects.push(resp.data)
             })
-        })
-        matchObjects = matches.concat(matchObjects) /* currently gets the same matches a seconds time */
-            setMatches(matchObjects)
+        }
+        console.log("ids2:", matchObjects);
+        matchObjects = first.concat(matchObjects) //currently gets the same matches a seconds time
+        setMatches(matchObjects)
 
     }
 
