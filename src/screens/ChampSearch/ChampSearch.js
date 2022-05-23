@@ -21,15 +21,15 @@ const ChampSearch = ({ navigation }) => {
     useEffect(() => {
         populateChampionList()
     }, [])
-    
+
 
     useEffect(() => {
         /* runs populateChampionList() when going back to this screen */
-        /* const unsubscribe = navigation.addListener("focus", () => {
+        const unsubscribe = navigation.addListener("focus", () => {
             populateChampionList()
         })
-        return unsubscribe */
-    }, [])
+        return unsubscribe
+    }, [navigation])
 
     const populateChampionList = () => {
         setChampionList(Object.values(champArray))

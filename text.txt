@@ -10,10 +10,12 @@ git push -u origin main
 TODO: 
     SelectedAbility:
         Check if field exists like cd, cost and range etc.
-    Pick region: Picker that changes context inside constants?
     Proper image for champ mastery when it's 0.
-    Match array not fetching in order? Validate.
+    Matches not fetching in order.
     Fix unique champs, ex. Vladimir.
+
+Maybe:
+    Pick region: Picker that changes context inside constants?
 
 Summoner spells:
     Summoner1Id / summoner2Id: 
