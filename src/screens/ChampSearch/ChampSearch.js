@@ -13,23 +13,23 @@ const ChampSearch = ({ navigation }) => {
     const [searchSelect, setSearchSelect] = useState(false)
     const [loading, setLoading] = useState(true)
 
-    const [searchResults, setSearchResults] = useState([])
-
     const { champArray, setChampArray } = useContext(ChampArrayContext)
     const [championList, setChampionList] = useState([])
 
+    const [searchList, setSearchList] = useState([])
+    const [search, setSearch] = useState(false)
+ 
     useEffect(() => {
         populateChampionList()
     }, [])
 
 
-    useEffect(() => {
-        /* runs populateChampionList() when going back to this screen */
+  /*   useEffect(() => {
         const unsubscribe = navigation.addListener("focus", () => {
             populateChampionList()
         })
         return unsubscribe
-    }, [navigation])
+    }, [navigation]) */
 
     const populateChampionList = () => {
         setChampionList(Object.values(champArray))
@@ -50,10 +50,9 @@ const ChampSearch = ({ navigation }) => {
                     console.log("Selected champ:", item.id)
                     navigation.navigate("ChampDetails", {
                         champName: item.id,
-                        champId: item.key,
-                        onGoBack: () => populateChampionList()
+                        champId: item.key
                     })
-                    /* setChampionList(Object.values(champArray)) */
+                    setSearch(false)
                 }}>
                     <Image
                         source={ChampionImages[item.id]}
@@ -67,8 +66,6 @@ const ChampSearch = ({ navigation }) => {
 
 
     const searchFunction = () => {
-        /* save searched champs in new array, then replace current champ array with that. */
-        /*  console.log(champArray.Aatrox.id); */
         let newcArr = Object.values(champArray)
         let searchedChamps = []
         newcArr.forEach((item, index) => {
@@ -77,8 +74,8 @@ const ChampSearch = ({ navigation }) => {
                 searchedChamps.push(item)
             }
         })
-        /* console.log(searchedChamps); */
-        setChampionList(searchedChamps)
+        setSearch(true)
+        setSearchList(searchedChamps)
         setSearchText("")
     }
 
@@ -126,7 +123,7 @@ const ChampSearch = ({ navigation }) => {
                     </View>
                 ) : (
                     <FlatList
-                        data={championList}
+                        data={ search == true ? searchList : championList}
                         renderItem={renderItem}
                         keyExtractor={(item, index) => index}
                         numColumns={4}

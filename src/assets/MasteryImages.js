@@ -1,7 +1,7 @@
 
 
 export const MasteryImages = {
-    mastery0: require("./masteryIcons/mastery0.jpg"),
+    mastery0: require("./masteryIcons/empty_logo.png"),
     mastery1: require("./masteryIcons/mastery1.png"),
     mastery2: require("./masteryIcons/mastery2.png"),
     mastery3: require("./masteryIcons/mastery3.png"),

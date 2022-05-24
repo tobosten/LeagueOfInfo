@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
     loreTitle: {
         color: "white",
         fontSize: 24,
-        marginBottom: 10,
         alignSelf: "flex-start"
     },
 

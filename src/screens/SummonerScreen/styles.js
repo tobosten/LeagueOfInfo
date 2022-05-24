@@ -54,6 +54,7 @@ export const styles = StyleSheet.create({
     rankedSoloText: {
         color: theme.white,
         margin: 10,
+        marginLeft: "5%",
         fontSize: 20
     },
     rankViewContainer: {

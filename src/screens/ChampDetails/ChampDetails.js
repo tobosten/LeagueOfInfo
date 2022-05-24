@@ -12,9 +12,9 @@ import { MasteryImages } from '../../assets/MasteryImages'
 
 const ChampDetails = ({ route, navigation }) => {
 
-    useEffect(() => {
-
-    }, [])
+    /* LogBox.ignoreLogs([
+        'Non-serializable values were found in the navigation state',
+    ]); */
 
 
 
@@ -130,9 +130,77 @@ const ChampDetails = ({ route, navigation }) => {
 
     function selectedSpellView() {
 
-        /* Does not working for Syndra and more? */
-        let description = spellInformation[selectedSpellIndex].description.replace(/<br>/gi, "\n")
-    
+        let description = spellInformation[selectedSpellIndex].description.replace(/<br>/g, "\n")
+        /* description = spellInformation[selectedSpellIndex].description.replace(/<font color='#FF9900'>/g, "") */
+
+        let data = Object.entries(spellInformation[selectedSpellIndex].description)
+
+        for (let i = 0; i < data.length; i++) {
+            if (data[i][1] == "<") {
+                if (data[i + 1][1] == "b") {
+                    if (data[i + 4][1] == "<") {
+                        if (data[i + 5][1] == "b") {
+                            data.splice(i + 7, 1)
+                            data.splice(i + 6, 1)
+                            data.splice(i + 5, 1)
+                            data[i + 4][1] = "\n"
+                        }
+                    }
+                    data.splice(i + 3, 1)
+                    data.splice(i + 2, 1)
+                    data.splice(i + 1, 1)
+                    data[i][1] = "\n"
+                }
+
+                if (data[i + 1][1] == "f") {
+                    data.splice(i + 21, 1)
+                    data.splice(i + 20, 1)
+                    data.splice(i + 19, 1)
+                    data.splice(i + 18, 1)
+                    data.splice(i + 17, 1)
+                    data.splice(i + 16, 1)
+                    data.splice(i + 15, 1)
+                    data.splice(i + 14, 1)
+                    data.splice(i + 13, 1)
+                    data.splice(i + 12, 1)
+                    data.splice(i + 11, 1)
+                    data.splice(i + 10, 1)
+                    data.splice(i + 9, 1)
+                    data.splice(i + 8, 1)
+                    data.splice(i + 7, 1)
+                    data.splice(i + 6, 1)
+                    data.splice(i + 5, 1)
+                    data.splice(i + 4, 1)
+                    data.splice(i + 3, 1)
+                    data.splice(i + 2, 1)
+                    data.splice(i + 1, 1)
+                    data.splice(i, 1)
+
+                }
+
+                if (data[i + 1][1] == "/") {
+                    data.splice(i + 6, 1)
+                    data.splice(i + 5, 1)
+                    data.splice(i + 4, 1)
+                    data.splice(i + 3, 1)
+                    data.splice(i + 2, 1)
+                    data.splice(i + 1, 1)
+                    data.splice(i, 1)
+                }
+            }
+        }
+
+        /* .replace(/<[^>]*>?/gm, '') */
+        let string = ""
+
+        for (let i = 0; i < data.length; i++) {
+            string += data[i][1]
+        }
+
+        console.log(string);
+
+
+
 
         return (
             <View style={{
@@ -141,10 +209,11 @@ const ChampDetails = ({ route, navigation }) => {
                 width: "90%",
                 alignSelf: "center",
                 marginBottom: 20,
-                borderRadius: 5
+                borderRadius: 5,
+                alignItems: "center"
             }}>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <View style={[styles.shadow, { borderWidth: 3, borderColor: theme.darkBlue, borderRadius: 10 }]}>
+                    <View style={[styles.shadow, { borderWidth: 3, borderColor: theme.darkBlue, borderRadius: 10, marginLeft: 5 }]}>
                         <Image
                             source={selectedSpellIndex > 3 ?
                                 { uri: `http://ddragon.leagueoflegends.com/cdn/12.5.1/img/passive/${spellInformation[selectedSpellIndex].image}` }
@@ -153,17 +222,18 @@ const ChampDetails = ({ route, navigation }) => {
                             style={{ height: 70, width: 70 }}
                         />
                     </View>
-                    <View style={{ flex: 1, borderWidth: 1, borderRadius: 2, marginHorizontal: 30, borderColor: theme.orange, backgroundColor: theme.lighterBlue }}>
+                    <View style={{ flex: 1, borderWidth: 1, borderRadius: 2, marginHorizontal: 20, borderColor: theme.orange, backgroundColor: theme.lighterBlue }}>
                         <Text style={{ color: theme.white, fontSize: 18, margin: 10, textAlign: "center" }}>{spellInformation[selectedSpellIndex].name}</Text>
                     </View>
                 </View>
-                <View style={{ marginHorizontal: 5, marginTop: 10 }}>
+                <View style={{borderBottomWidth: 1, borderColor: theme.lighterBlue, width: "100%", marginVertical: 10}} />
+                <View style={{ marginHorizontal: 5 }}>
                     {/* Check if fields exists before displaying */}
                     {selectedSpellIndex == 4 ? (
                         <View>
-                            <View style={{ marginTop: 15 }}>
+                            <View style={{}}>
                                 <Text style={{ color: theme.white, fontSize: 18 }}>Description</Text>
-                                <Text style={styles.baseStatsText}>{spellInformation[selectedSpellIndex].description}</Text>
+                                <Text style={styles.baseStatsText}>{string}</Text>
                             </View>
                         </View>
                     ) : (
@@ -183,6 +253,7 @@ const ChampDetails = ({ route, navigation }) => {
             </View >
         )
     }
+
 
     function checkMastery() {
         let source = ""
@@ -219,7 +290,7 @@ const ChampDetails = ({ route, navigation }) => {
     //img size
     let height = 300
     let width = height * 0.55
-
+    
     return (
         <View style={{ height: "100%", width: "100%", backgroundColor: theme.darkBlue }}>
             {loading ? (
@@ -268,6 +339,7 @@ const ChampDetails = ({ route, navigation }) => {
                             <View style={styles.loreMainContainer}>
                                 <View style={styles.loreContainer}>
                                     <Text style={styles.loreTitle}>Lore</Text>
+                                    <View style={{ borderBottomWidth: 1, width: "100%", borderColor: theme.lighterBlue, alignSelf: "center", marginVertical: 5 }} />
                                     <Text style={{ color: theme.white }}>{champJson[champName].lore}</Text>
                                 </View>
                             </View>
@@ -296,6 +368,7 @@ const ChampDetails = ({ route, navigation }) => {
                             {selectedSpellView()}
                             <View style={styles.baseStatsContainer}>
                                 <Text style={styles.baseStatsTitle}>Base Stats</Text>
+                                <View style={{ borderBottomWidth: 1, width: "100%", borderColor: theme.lighterBlue, alignSelf: "center", marginVertical: 5 }} />
                                 <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 5 }}>
                                     <View style={{ flex: 1, marginLeft: 3 }}>
                                         <Text style={styles.baseStatsText}>

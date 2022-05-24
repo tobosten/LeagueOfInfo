@@ -7,23 +7,17 @@ import axios from 'axios';
 import { styles } from './styles';
 import { rankEmblems } from '../../assets/rankEmblems';
 import { ChampArrayContext, MasteryArrayContext } from '../../ProjectContext';
-import ChampionImages from '../../assets/ChampionImages';
-import { RankBorders } from '../../assets/rankBorders/RankBorders';
-import { MasteryImages } from '../../assets/MasteryImages'
-import { LevelBorders } from "../../assets/levelBorders/LevelBorders"
 import ProfileLevelBorder from '../../components/ProfileLevelBorder';
 import MostPlayed from '../../components/MostPlayed';
 
 
 const SummonerScreen = () => {
 
-  const [isLoading, setIsLoading] = useState(true)
-
   const { userInfo } = useContext(UserInfoContext)
   const { champArray } = useContext(ChampArrayContext)
   const { masteryArray } = useContext(MasteryArrayContext)
   const [rankedStats, setRankedStats] = useState(null)
-  /* const [mostPlayed, setMostPlayed] = useState([]) */
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     if (isLoading == true) {
@@ -95,46 +89,6 @@ const SummonerScreen = () => {
   }
 
 
-  const mostPlayedRender = ({ item, index }) => {
-
-    let style = {}
-    if (index < 1 || index > 1) {
-      style = { marginTop: 10 }
-    }
-    let masteryLevel = ""
-    masteryArray.forEach((value) => {
-      if (item.key == value.championId) {
-        masteryLevel = "mastery" + value.championLevel
-      }
-    })
-
-    return (
-      <View style={{ marginHorizontal: 15 }}>
-        <Image
-          source={MasteryImages[masteryLevel]}/* set so image displays depending on mastery level */
-          style={[{ height: 40, width: 40, alignSelf: "center", marginBottom: 5 }, style]}
-        />
-        <Image
-          source={ChampionImages[mostPlayed[index].id]}
-          style={{
-            height: 80,
-            width: 80,
-            borderRadius: 50,
-          }}
-        />
-        <Text style={[{
-          textAlign: "center",
-          color: theme.white,
-          marginTop: 5,
-          padding: 2,
-          backgroundColor: theme.darkBlue,
-          borderRadius: 5
-        }, styles.shadow]}>{item.id}</Text>
-      </View>
-    )
-  }
-
-
   function rankImage() {
     let img = rankEmblems[rankedStats.tier]
     return (
@@ -150,8 +104,6 @@ const SummonerScreen = () => {
             style={{ height: 135, width: 100 }}
           />
         )}
-
-
       </View>
     )
   }
@@ -163,44 +115,6 @@ const SummonerScreen = () => {
       <Text style={styles.rankText}>{text}</Text>
     )
 
-  }
-
-  function mostPlayedChampion() {
-    let champName = ""
-    Object.values(champArray).forEach((value, index) => {
-      if (value.key == masteryArray[0].championId) {
-        champName = value.id
-      }
-    })
-
-    let mlvl = masteryArray[0].championLevel
-    let source = ""
-    /* console.log(masteryArray[0]); */
-    mlvl == 0 ? source = MasteryImages.mastery0 : null;
-    mlvl == 1 ? source = MasteryImages.mastery1 : null;
-    mlvl == 2 ? source = MasteryImages.mastery2 : null;
-    mlvl == 3 ? source = MasteryImages.mastery3 : null;
-    mlvl == 4 ? source = MasteryImages.mastery4 : null;
-    mlvl == 5 ? source = MasteryImages.mastery5 : null;
-    mlvl == 6 ? source = MasteryImages.mastery6 : null;
-    mlvl == 7 ? source = MasteryImages.mastery7 : null;
-
-    let width = 350
-    let height = width * 0.57
-    return (
-      <View style={{ alignSelf: "center", marginVertical: 5 }}>
-        <ImageBackground
-          source={{ uri: `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champName}_0.jpg` }}
-          style={{ width: width, height: height }}
-        >
-          <Text style={{ color: theme.white, fontSize: 24, marginLeft: 10 }}>{champName}</Text>
-          <Image
-            source={source}
-            style={{ height: 60, width: 60, marginLeft: 10 }}
-          />
-        </ImageBackground>
-      </View>
-    )
   }
 
 
@@ -216,6 +130,7 @@ const SummonerScreen = () => {
 
           <View style={[styles.rankedSoloContainer, styles.shadow]}>
             <Text style={styles.rankedSoloText}>Ranked Solo</Text>
+            <View style={{borderBottomWidth: 1, width: "90%", borderColor: theme.lighterBlue, alignSelf: "center"}} />
             <View style={styles.rankViewContainer}>
               <View style={styles.rankContainer}>
                 {rankImage()}

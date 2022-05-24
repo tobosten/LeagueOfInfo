@@ -13,6 +13,7 @@ TODO:
     Proper image for champ mastery when it's 0.
     Matches not fetching in order.
     Fix unique champs, ex. Vladimir.
+    Hide "More Matches..." button in Match History when it's clicked.
 
 Maybe:
     Pick region: Picker that changes context inside constants?
