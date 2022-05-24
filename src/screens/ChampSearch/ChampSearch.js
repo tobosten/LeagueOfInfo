@@ -1,4 +1,4 @@
-import { View, Text, FlatList, TouchableOpacity, TextInput, Image, Button, ActivityIndicator, BackHandler } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, TextInput, Image, Button, ActivityIndicator, BackHandler, Dimensions } from 'react-native'
 import React, { useEffect, useContext, useState } from 'react'
 import { theme } from '../../theme'
 import axios from 'axios';
@@ -18,18 +18,18 @@ const ChampSearch = ({ navigation }) => {
 
     const [searchList, setSearchList] = useState([])
     const [search, setSearch] = useState(false)
- 
+
     useEffect(() => {
         populateChampionList()
     }, [])
 
 
-  /*   useEffect(() => {
-        const unsubscribe = navigation.addListener("focus", () => {
-            populateChampionList()
-        })
-        return unsubscribe
-    }, [navigation]) */
+    /*   useEffect(() => {
+          const unsubscribe = navigation.addListener("focus", () => {
+              populateChampionList()
+          })
+          return unsubscribe
+      }, [navigation]) */
 
     const populateChampionList = () => {
         setChampionList(Object.values(champArray))
@@ -79,6 +79,21 @@ const ChampSearch = ({ navigation }) => {
         setSearchText("")
     }
 
+    let numColumns = Int8Array
+    if (Dimensions.get("screen").width < 350) {
+        numColumns = 3
+    }
+    if (Dimensions.get("screen").width > 400) {
+        numColumns = 4
+    }
+    if (Dimensions.get("screen").width > 500) {
+        numColumns = 5
+    }
+    if (Dimensions.get("screen").width > 550) {
+        numColumns = 6
+    }
+    console.log(Dimensions.get("screen").width);
+
     return (
         <View style={styles.mainContainer}>
             <View style={styles.topContainer}>
@@ -109,9 +124,7 @@ const ChampSearch = ({ navigation }) => {
                             />
                         </TouchableOpacity>
                     )
-
                     }
-
                 </View>
             </View>
 
@@ -122,21 +135,22 @@ const ChampSearch = ({ navigation }) => {
                             style={{}} />
                     </View>
                 ) : (
-                    <FlatList
-                        data={ search == true ? searchList : championList}
-                        renderItem={renderItem}
-                        keyExtractor={(item, index) => index}
-                        numColumns={4}
-                        ListEmptyComponent={() => (
-                            <View>
-                                {/* <Text style={{ color: "white" }}>Api Not Working</Text> */}
-                            </View>
-                        )}
-                    />
+                    <View>
+                        <FlatList
+                            data={search == true ? searchList : championList}
+                            renderItem={renderItem}
+                            keyExtractor={(item, index) => index}
+                            numColumns={numColumns}
+                            ListEmptyComponent={() => (
+                                <View>
+                                    {/* <Text style={{ color: "white" }}>Api Not Working</Text> */}
+                                </View>
+                            )}
+                        />
+                    </View>
+
                 )
-
                 }
-
             </View>
         </View>
     )

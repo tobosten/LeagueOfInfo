@@ -130,13 +130,13 @@ const ChampDetails = ({ route, navigation }) => {
 
     function selectedSpellView() {
 
-        let description = spellInformation[selectedSpellIndex].description.replace(/<br>/g, "\n")
-        /* description = spellInformation[selectedSpellIndex].description.replace(/<font color='#FF9900'>/g, "") */
+        /* let description = spellInformation[selectedSpellIndex].description.replace(/<br>/g, "\n") */
 
         let data = Object.entries(spellInformation[selectedSpellIndex].description)
 
         for (let i = 0; i < data.length; i++) {
             if (data[i][1] == "<") {
+                /* removes <br> */
                 if (data[i + 1][1] == "b") {
                     if (data[i + 4][1] == "<") {
                         if (data[i + 5][1] == "b") {
@@ -151,7 +151,7 @@ const ChampDetails = ({ route, navigation }) => {
                     data.splice(i + 1, 1)
                     data[i][1] = "\n"
                 }
-
+                /* removes <font color='#FF9900'> */
                 if (data[i + 1][1] == "f") {
                     data.splice(i + 21, 1)
                     data.splice(i + 20, 1)
@@ -175,10 +175,48 @@ const ChampDetails = ({ route, navigation }) => {
                     data.splice(i + 2, 1)
                     data.splice(i + 1, 1)
                     data.splice(i, 1)
-
                 }
 
                 if (data[i + 1][1] == "/") {
+                    /* removes </font> */
+                    if (data[i + 2][1] == "f") {
+                        data.splice(i + 6, 1) 
+                        data.splice(i + 5, 1)
+                        data.splice(i + 4, 1)
+                        data.splice(i + 3, 1)
+                        data.splice(i + 2, 1)
+                        data.splice(i + 1, 1)
+                        data.splice(i, 1)
+                    } else if (data[i + 2][1] == "k") {
+                        /* removes </keywordMinor>  */
+                        data.splice(i + 14, 1)
+                        data.splice(i + 13, 1)
+                        data.splice(i + 12, 1)
+                        data.splice(i + 11, 1)
+                        data.splice(i + 10, 1)
+                        data.splice(i + 9, 1)
+                        data.splice(i + 8, 1)
+                        data.splice(i + 7, 1)
+                        data.splice(i + 6, 1)
+                        data.splice(i + 5, 1)
+                        data.splice(i + 4, 1)
+                        data.splice(i + 3, 1)
+                        data.splice(i + 2, 1)
+                        data.splice(i + 1, 1)
+                        data.splice(i, 1)
+                    }
+
+
+                }
+                /* removes <keywordMinor>*/
+                if (data[i + 1][1] == "k") {
+                    data.splice(i + 13, 1)
+                    data.splice(i + 12, 1)
+                    data.splice(i + 11, 1)
+                    data.splice(i + 10, 1)
+                    data.splice(i + 9, 1)
+                    data.splice(i + 8, 1)
+                    data.splice(i + 7, 1)
                     data.splice(i + 6, 1)
                     data.splice(i + 5, 1)
                     data.splice(i + 4, 1)
@@ -190,17 +228,11 @@ const ChampDetails = ({ route, navigation }) => {
             }
         }
 
-        /* .replace(/<[^>]*>?/gm, '') */
         let string = ""
 
         for (let i = 0; i < data.length; i++) {
             string += data[i][1]
         }
-
-        console.log(string);
-
-
-
 
         return (
             <View style={{
@@ -226,7 +258,7 @@ const ChampDetails = ({ route, navigation }) => {
                         <Text style={{ color: theme.white, fontSize: 18, margin: 10, textAlign: "center" }}>{spellInformation[selectedSpellIndex].name}</Text>
                     </View>
                 </View>
-                <View style={{borderBottomWidth: 1, borderColor: theme.lighterBlue, width: "100%", marginVertical: 10}} />
+                <View style={{ borderBottomWidth: 1, borderColor: theme.lighterBlue, width: "100%", marginVertical: 10 }} />
                 <View style={{ marginHorizontal: 5 }}>
                     {/* Check if fields exists before displaying */}
                     {selectedSpellIndex == 4 ? (
@@ -243,7 +275,7 @@ const ChampDetails = ({ route, navigation }) => {
                             <Text style={styles.baseStatsText}>Range: {spellInformation[selectedSpellIndex].range}</Text>
                             <View style={{ marginTop: 15 }}>
                                 <Text style={{ color: theme.white, fontSize: 18 }}>Description</Text>
-                                <Text style={styles.baseStatsText}>{description}</Text>
+                                <Text style={styles.baseStatsText}>{string}</Text>
                             </View>
                         </View>
                     )}
@@ -290,7 +322,7 @@ const ChampDetails = ({ route, navigation }) => {
     //img size
     let height = 300
     let width = height * 0.55
-    
+
     return (
         <View style={{ height: "100%", width: "100%", backgroundColor: theme.darkBlue }}>
             {loading ? (

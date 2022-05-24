@@ -15,6 +15,9 @@ TODO:
     Fix unique champs, ex. Vladimir.
     Hide "More Matches..." button in Match History when it's clicked.
 
+Bugs:
+    Braum not working with </font> remove.  
+
 Maybe:
     Pick region: Picker that changes context inside constants?
 
