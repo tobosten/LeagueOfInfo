@@ -85,7 +85,7 @@ const ChampSearch = ({ navigation }) => {
     if (Dimensions.get("screen").width > 550) {
         numColumns = 6
     }
-    console.log(Dimensions.get("screen").width);
+    /* console.log(Dimensions.get("screen").width); */
 
     return (
         <View style={styles.mainContainer}>
