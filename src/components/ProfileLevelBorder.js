@@ -23,7 +23,7 @@ const ProfileLevelBorder = (icon, border) => {
         <View style={{ justifyContent: "center", alignItems: "center", marginTop: 70 }}>
             <Image
                 source={{ uri: `http://ddragon.leagueoflegends.com/cdn/12.7.1/img/profileicon/${userInfo.profileIconId}.png` }}
-                style={{ height: 110, width: 110, marginBottom: 20 }}
+                style={{ height: 110, width: 110, marginBottom: 20, borderRadius: 100 }}
             />
             <Image
                 source={checkBorderLevel()}
