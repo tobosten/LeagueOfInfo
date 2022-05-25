@@ -53,6 +53,7 @@ const MatchHistory = () => {
         })
     }, [])
 
+
     function fetchMatches(data, i, matches1Objects) {
         axios.get(
             `https://europe.api.riotgames.com/lol/match/v5/matches/${data[i]}?${constants.api_key}`

@@ -9,7 +9,6 @@ import { useToast } from 'react-native-toast-notifications'
 import { ChampArrayContext } from '../../ProjectContext'
 import LoginButton from '../../components/LoginButton'
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { isConfigured } from 'react-native-reanimated/lib/reanimated2/core'
 
 
 const LoginScreen = ({ navigation }) => {
@@ -22,6 +21,9 @@ const LoginScreen = ({ navigation }) => {
     const { setMasteryArray } = useContext(MasteryArrayContext)
     const { setChampArray } = useContext(ChampArrayContext)
 
+    /* used to display correct toast when no name */
+    let findMe = 1
+    let prevMe = 2
 
     useEffect(() => {
         axios.get(`http://ddragon.leagueoflegends.com/cdn/12.6.1/data/en_US/champion.json`)
@@ -54,7 +56,7 @@ const LoginScreen = ({ navigation }) => {
         }
     }
 
-    async function login(value) {
+    async function login(value, bC) {
         //fetch user
         if (value !== "") {
             storeData()
@@ -86,12 +88,15 @@ const LoginScreen = ({ navigation }) => {
                     toast.show("No summoner by that name")
                 })
         } else {
-            toast.show("Requires summoner name")
+            if (bC == 1) {
+                toast.show("Requires summoner name")
+            } else {
+                toast.show("Requires a previous user")
+            }
+
         }
         storeData(value)
     }
-
-    /* '#bc2b78' */
 
     return (
         <View style={{ flex: 1, backgroundColor: theme.darkBlue }}>
@@ -102,16 +107,19 @@ const LoginScreen = ({ navigation }) => {
             </View>
 
             <View style={styles.loginContainer}>
-                <Text style={{ color: "white", marginRight: "auto", marginVertical: 5 }}>Summoner name</Text>
+                <View style={{ width: "100%", flexDirection: "row" }}>
+                    <Text style={{ color: "white", marginRight: "auto", marginVertical: 5 }}>Summoner name</Text>
+                    {/* <Text style={{ color: theme.white, fontSize: 10, marginTop: "auto", marginBottom: 3 }}>Previous name</Text> */}
+                </View>
                 <View style={styles.inputContainer}>
                     <TextInput
-                        style={{ height: "100%", paddingLeft: 5, flex: 1 }}
+                        style={{ height: "100%", paddingLeft: 5, flex: 1, fontSize: 18 }}
                         value={sumName}
                         onChangeText={setSumName}
                         placeholder={prevUser}
                     />
                     <TouchableOpacity style={{}} onPress={() => {
-                        login(prevUser)
+                        login(prevUser, prevMe)
                     }}>
                         <Image
                             source={require("../../assets/buttons/prevNameAccept.png")}
@@ -123,7 +131,7 @@ const LoginScreen = ({ navigation }) => {
 
                 {/* <LoginButton onPress={() => login()} /> */}
                 <TouchableOpacity style={styles.loginButton} onPress={() => {
-                    login(sumName)
+                    login(sumName, findMe)
                 }}>
                     <Text style={{ color: "white", fontSize: 18 }}>Find me</Text>
                 </TouchableOpacity>

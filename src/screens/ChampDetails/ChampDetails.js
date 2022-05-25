@@ -9,13 +9,14 @@ import styles from './styles'
 import { UserInfoContext, MasteryArrayContext } from '../../ProjectContext'
 import { constants } from '../../constants'
 import { MasteryImages } from '../../assets/MasteryImages'
+import { useToast } from 'react-native-toast-notifications'
 
 const ChampDetails = ({ route, navigation }) => {
 
     /* LogBox.ignoreLogs([
         'Non-serializable values were found in the navigation state',
     ]); */
-
+    const toast = useToast()
 
 
     /* let champName = "Syndra" */
@@ -176,20 +177,19 @@ const ChampDetails = ({ route, navigation }) => {
                     data.splice(i + 1, 1)
                     data.splice(i, 1)
                 }
-
-                if (data[i + 1][1] == "/") {
-                    /* removes </font> */
-                    if (data[i + 2][1] == "f") {
-                        data.splice(i + 6, 1) 
-                        data.splice(i + 5, 1)
-                        data.splice(i + 4, 1)
-                        data.splice(i + 3, 1)
-                        data.splice(i + 2, 1)
-                        data.splice(i + 1, 1)
-                        data.splice(i, 1)
-                    } else if (data[i + 2][1] == "k") {
-                        /* removes </keywordMinor>  */
-                        data.splice(i + 14, 1)
+                /* removes </font> */
+                if (data[i + 2][1] == "f") {
+                    data.splice(i + 6, 1)
+                    data.splice(i + 5, 1)
+                    data.splice(i + 4, 1)
+                    data.splice(i + 3, 1)
+                    data.splice(i + 2, 1)
+                    data.splice(i + 1, 1)
+                    data.splice(i, 1)
+                }
+                /* removes <keywordMinor>*/
+                try { // Fixes champions like ex. Braum, with undefined value
+                    if (data[i + 1][1] == "k") {
                         data.splice(i + 13, 1)
                         data.splice(i + 12, 1)
                         data.splice(i + 11, 1)
@@ -205,26 +205,29 @@ const ChampDetails = ({ route, navigation }) => {
                         data.splice(i + 1, 1)
                         data.splice(i, 1)
                     }
+                    /* removes </keywordMinor>  */
+                    if (data[i + 2][1] == "k") {
+                        data.splice(i + 14, 1)
+                        data.splice(i + 13, 1)
+                        data.splice(i + 12, 1)
+                        data.splice(i + 11, 1)
+                        data.splice(i + 10, 1)
+                        data.splice(i + 9, 1)
+                        data.splice(i + 8, 1)
+                        data.splice(i + 7, 1)
+                        data.splice(i + 6, 1)
+                        data.splice(i + 5, 1)
+                        data.splice(i + 4, 1)
+                        data.splice(i + 3, 1)
+                        data.splice(i + 2, 1)
+                        data.splice(i + 1, 1)
+                        data.splice(i, 1)
 
+                    }
+                } catch (e) {
+                    /* console.log(e); */
+                }
 
-                }
-                /* removes <keywordMinor>*/
-                if (data[i + 1][1] == "k") {
-                    data.splice(i + 13, 1)
-                    data.splice(i + 12, 1)
-                    data.splice(i + 11, 1)
-                    data.splice(i + 10, 1)
-                    data.splice(i + 9, 1)
-                    data.splice(i + 8, 1)
-                    data.splice(i + 7, 1)
-                    data.splice(i + 6, 1)
-                    data.splice(i + 5, 1)
-                    data.splice(i + 4, 1)
-                    data.splice(i + 3, 1)
-                    data.splice(i + 2, 1)
-                    data.splice(i + 1, 1)
-                    data.splice(i, 1)
-                }
             }
         }
 

@@ -24,13 +24,6 @@ const ChampSearch = ({ navigation }) => {
     }, [])
 
 
-    /*   useEffect(() => {
-          const unsubscribe = navigation.addListener("focus", () => {
-              populateChampionList()
-          })
-          return unsubscribe
-      }, [navigation]) */
-
     const populateChampionList = () => {
         setChampionList(Object.values(champArray))
     }
@@ -79,7 +72,7 @@ const ChampSearch = ({ navigation }) => {
         setSearchText("")
     }
 
-    let numColumns = Int8Array
+    let numColumns = 4
     if (Dimensions.get("screen").width < 350) {
         numColumns = 3
     }

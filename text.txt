@@ -12,13 +12,16 @@ TODO:
         Check if field exists like cd, cost and range etc.
     Matches not fetching in order.
     Fix unique champs, ex. Vladimir.
-    Hide "More Matches..." button in Match History when it's clicked.
 
 Bugs:
-    Braum not working with </font> remove.  
+    Bug where each ability has different margin values
 
 Maybe:
     Pick region: Picker that changes context inside constants?
+
+
+{{ eN }}
+N is number from 1-10 in effect array for champ abiltiy. ex "Ability for {{ e8 }} seconds."
 
 Summoner spells:
     Summoner1Id / summoner2Id: 
@@ -48,14 +51,6 @@ queueId 400 = Normal Draft
     gameVersion	"12.7.433.4138"
     mapId	11
 }
-
-
-
-Maybe?:
-    Change border colors in Summoner screen to color of current rank.
-
-Bug:
-    Unranked image not showing.
     
 
 Endpoints: 
