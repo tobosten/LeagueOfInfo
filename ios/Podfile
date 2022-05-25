@@ -26,6 +26,8 @@ target 'examRep' do
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-async-storage/async-storage'
+
   post_install do |installer|
     react_native_post_install(installer)
 

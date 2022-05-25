@@ -10,7 +10,6 @@ git push -u origin main
 TODO: 
     SelectedAbility:
         Check if field exists like cd, cost and range etc.
-    Proper image for champ mastery when it's 0.
     Matches not fetching in order.
     Fix unique champs, ex. Vladimir.
     Hide "More Matches..." button in Match History when it's clicked.

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState, useEffect, useContext } from 'react'
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, ImageBackground } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, ImageBackground, Image } from 'react-native'
 import { theme } from '../../theme'
 import styles from './styles'
 import { UserInfoContext, MasteryArrayContext } from '../../ProjectContext'
@@ -8,30 +8,57 @@ import { constants } from '../../constants'
 import { useToast } from 'react-native-toast-notifications'
 import { ChampArrayContext } from '../../ProjectContext'
 import LoginButton from '../../components/LoginButton'
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { isConfigured } from 'react-native-reanimated/lib/reanimated2/core'
 
 
 const LoginScreen = ({ navigation }) => {
 
     const toast = useToast()
     const [sumName, setSumName] = useState("Ezuyi")
+    const [prevUser, setPrevUser] = useState("")
     const [loading, setLoading] = useState(false)
     const { userInfo, setUserInfo } = useContext(UserInfoContext)
     const { setMasteryArray } = useContext(MasteryArrayContext)
     const { setChampArray } = useContext(ChampArrayContext)
 
-   
 
     useEffect(() => {
         axios.get(`http://ddragon.leagueoflegends.com/cdn/12.6.1/data/en_US/champion.json`)
             .then((resp) => {
                 setChampArray(resp.data.data)
             })
+
+        getData()
     }, [])
 
-    async function login() {
+
+    const storeData = async (value) => {
+        try {
+            const jsonValue = JSON.stringify(value)
+            await AsyncStorage.setItem("key", jsonValue)
+            getData()
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    const getData = async () => {
+        try {
+            const prevName = await AsyncStorage.getItem("key")
+            if (prevName !== null) {
+                setPrevUser(prevName.replace(/"/g, ""))
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    async function login(value) {
         //fetch user
-        if (sumName !== "") {
-            axios.get(`https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${sumName}?${constants.api_key}`)
+        if (value !== "") {
+            storeData()
+            axios.get(`https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${value}?${constants.api_key}`)
                 .then((resp) => {
                     console.log(resp.data);
                     let id = resp.data.id
@@ -49,7 +76,10 @@ const LoginScreen = ({ navigation }) => {
                         `https://euw1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${id}?${constants.api_key}`
                     ).then((resp) => {
                         setMasteryArray(resp.data)
-                        setSumName("")
+                        if (sumName != null) {
+                            setSumName("")
+                        }
+
                         navigation.navigate("DrawerNavigator")
                     })
                 }).catch(() => {
@@ -58,8 +88,7 @@ const LoginScreen = ({ navigation }) => {
         } else {
             toast.show("Requires summoner name")
         }
-
-
+        storeData(value)
     }
 
     /* '#bc2b78' */
@@ -74,17 +103,30 @@ const LoginScreen = ({ navigation }) => {
 
             <View style={styles.loginContainer}>
                 <Text style={{ color: "white", marginRight: "auto", marginVertical: 5 }}>Summoner name</Text>
-                <TextInput
-                    style={styles.nameInput}
-                    value={sumName}
-                    onChangeText={setSumName}
-                />
-                <LoginButton onPress={() => login()} />
-                {/* <TouchableOpacity style={styles.loginButton} onPress={() => {
-                    login()
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        style={{ height: "100%", paddingLeft: 5, flex: 1 }}
+                        value={sumName}
+                        onChangeText={setSumName}
+                        placeholder={prevUser}
+                    />
+                    <TouchableOpacity style={{}} onPress={() => {
+                        login(prevUser)
+                    }}>
+                        <Image
+                            source={require("../../assets/buttons/prevNameAccept.png")}
+                            style={{ height: 35, width: 35, marginRight: 5 }}
+                        />
+                    </TouchableOpacity>
+
+                </View>
+
+                {/* <LoginButton onPress={() => login()} /> */}
+                <TouchableOpacity style={styles.loginButton} onPress={() => {
+                    login(sumName)
                 }}>
                     <Text style={{ color: "white", fontSize: 18 }}>Find me</Text>
-                </TouchableOpacity> */}
+                </TouchableOpacity>
             </View>
         </View>
     )
