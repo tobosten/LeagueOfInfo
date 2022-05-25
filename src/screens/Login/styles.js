@@ -14,12 +14,16 @@ const styles = StyleSheet.create({
         width: "80%",
         alignSelf: "center"
     },
-    nameInput: {
+    inputContainer: {
         backgroundColor: "white",
         height: 40,
         width: "100%",
-        paddingHorizontal: 10,
-        borderRadius: 5
+        borderRadius: 5,
+        flexDirection: "row",
+        justifyContent: 'center',
+        alignItems: "center"
+    },
+    nameInput: {
     },
     loginButton: {
         backgroundColor: theme.orange,

@@ -77,7 +77,7 @@ const MatchHistory = () => {
         }
         matchObjects = first.concat(matchObjects) //currently gets the same matches a seconds time
         setMatches(matchObjects)
-
+        setShowMoreMatches(true)
     }
 
     if (isLoading == true && matches != null && runeJson != null) {
