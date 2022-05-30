@@ -22,19 +22,25 @@ const MatchHistory = () => {
     const [matches, setMatches] = useState([])
     const [matchesID, setMatchesID] = useState([])
 
+    const [baseIDs, setBaseIDs] = useState([])
+
 
     useEffect(() => {
         axios.get(
             `https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/${userInfo.puuid}/ids?start=0&count=20&${constants.api_key}`
         ).then((resp) => {
             let data = resp.data
+            let IDs = data
+            /* setIDs(data) */
             let matches1Objects = []
             setMatchesID(data)
             for (let i = 0; i < 10; i++) {
-                fetchMatches(data, i, matches1Objects)
-            }
+                fetchMatches(data, i, matches1Objects, IDs)
 
+            }
+            setBaseIDs(data)
             setMatches(matches1Objects)
+            console.log(IDs);
 
             setTimeout(() => {
                 axios.get(
@@ -54,17 +60,22 @@ const MatchHistory = () => {
     }, [])
 
 
-    function fetchMatches(data, i, matches1Objects) {
-        axios.get(
+
+    async function fetchMatches(data, i, matches1Objects, IDs) {
+        await axios.get(
             `https://europe.api.riotgames.com/lol/match/v5/matches/${data[i]}?${constants.api_key}`
+
         ).then((resp) => {
-            /* fullMatchObjects.push(resp.data) */
-            matches1Objects.push(resp.data)
+            for (let i = 0; i < IDs.length; i++) {
+                if (IDs[i] == resp.data.metadata.matchId) {
+                    matches1Objects.splice(i, 0, resp.data)
+                }
+            }
         })
         return matches1Objects
     }
 
-    function fetchMoreMatches() {
+    async function fetchMoreMatches() {
 
         let matchObjects = []
         let first = [...matches]
@@ -72,11 +83,13 @@ const MatchHistory = () => {
             axios.get(
                 `https://europe.api.riotgames.com/lol/match/v5/matches/${matchesID[i]}?${constants.api_key}`
             ).then((resp) => {
-                /* console.log(i); */
-                matchObjects.push(resp.data)
+                if (baseIDs[i] == resp.data.metadata.matchId) {
+                    matchObjects.splice(i, 0, resp.data)
+                }
             })
         }
-        matchObjects = first.concat(matchObjects) //currently gets the same matches a seconds time
+
+        matchObjects = first.concat(matchObjects)
         setMatches(matchObjects)
         setShowMoreMatches(true)
     }
@@ -95,7 +108,6 @@ const MatchHistory = () => {
 
         item.info.participants.forEach((value) => {
             if (value.puuid == userInfo.puuid) {
-                /* console.log("User puuid:", value.puuid) */;
                 userStats = value
             }
         })
@@ -282,7 +294,7 @@ const MatchHistory = () => {
             ) : (
                 <View style={{ marginTop: 20 }}>
                     <FlatList
-                        data={matches}
+                        data={matches/* .sort((a, b) => b.) */}
                         renderItem={matchRender}
                         keyExtractor={(item, index) => index}
                         ListFooterComponent={() => {

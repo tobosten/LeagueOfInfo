@@ -10,8 +10,8 @@ git push -u origin main
 TODO: 
     SelectedAbility:
         Check if field exists like cd, cost and range etc.
-    Matches not fetching in order.
     Fix unique champs, ex. Vladimir.
+    Sort matches by date. Date exists in response header for each match.
 
 Bugs:
     Bug where each ability has different margin values

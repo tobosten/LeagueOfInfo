@@ -23,6 +23,7 @@ const DrawerNavigator = ({ navigation }) => {
         headerTintColor: theme.white,
 
       }}
+      useLegacyImplementation={false}
     >
       <Drawer.Screen name="Summoner" component={SummonerScreen}
         options={{
@@ -30,7 +31,7 @@ const DrawerNavigator = ({ navigation }) => {
           headerRight: () => (
             <TouchableOpacity style={{
               marginRight: 10
-            }} onPress={() => {navigation.navigate("Login")}}>
+            }} onPress={() => { navigation.navigate("Login") }}>
               <Image
                 source={require("../assets/buttons/logoutButton.png")}
                 style={{ height: 35, width: 35 }}

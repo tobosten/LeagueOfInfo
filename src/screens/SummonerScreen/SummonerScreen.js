@@ -114,7 +114,6 @@ const SummonerScreen = () => {
     return (
       <Text style={styles.rankText}>{text}</Text>
     )
-
   }
 
 
