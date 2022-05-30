@@ -18,6 +18,7 @@ const ChampSearch = ({ navigation }) => {
 
     const [searchList, setSearchList] = useState([])
     const [search, setSearch] = useState(false)
+    const [searchPlaceholder, setSearchPlaceholder] = useState("")
 
     useEffect(() => {
         populateChampionList()
@@ -69,6 +70,7 @@ const ChampSearch = ({ navigation }) => {
         })
         setSearch(true)
         setSearchList(searchedChamps)
+        setSearchPlaceholder(searchText)
         setSearchText("")
     }
 
@@ -94,6 +96,7 @@ const ChampSearch = ({ navigation }) => {
                     <TextInput
                         value={searchText}
                         onChangeText={setSearchText}
+                        placeholder={searchPlaceholder}
                         style={styles.searchField}
                         onFocus={() => setSearchSelect(true)}
                         onTouchCancel={() => setSearchText(false)}

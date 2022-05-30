@@ -14,7 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 const LoginScreen = ({ navigation }) => {
 
     const toast = useToast()
-    const [sumName, setSumName] = useState("Ezuyi")
+    const [sumName, setSumName] = useState("")
     const [prevUser, setPrevUser] = useState("")
     const [loading, setLoading] = useState(false)
     const { userInfo, setUserInfo } = useContext(UserInfoContext)
