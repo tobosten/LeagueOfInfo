@@ -8,7 +8,7 @@ const ProfileLevelBorder = (icon, border) => {
 
 
     function checkBorderLevel() {
-        let array = [1, 30, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 600]
+        let array = [1, 30, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500]
         let image = null
 
         array.forEach((value) => {

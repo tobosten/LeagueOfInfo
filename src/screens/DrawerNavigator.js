@@ -25,7 +25,7 @@ const DrawerNavigator = ({ navigation }) => {
         headerTintColor: theme.white,
 
       }}
-      useLegacyImplementation={false}
+      useLegacyImplementation={true}
     >
       <Drawer.Screen name="Summoner" component={SummonerScreen}
         options={{
@@ -52,7 +52,7 @@ const DrawerNavigator = ({ navigation }) => {
               }}>
               <Image
                 source={require("../assets/buttons/infoButton.png")}
-                style={{ height: 30, width: 30 }}
+                style={{ height: 25, width: 25 }}
               />
             </TouchableOpacity>
           )

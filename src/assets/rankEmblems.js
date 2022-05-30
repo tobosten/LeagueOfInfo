@@ -9,5 +9,5 @@ export const rankEmblems = {
     DIAMOND: require("./emblems/diamondEmblem.png"),
     MASTER: require("./emblems/masterEmblem.png"),
     GRANDMASTER: require("./emblems/grandmasterEmblem.png"),
-    CHALLANGER: require("./emblems/challangerEmblem.png"),
+    CHALLENGER: require("./emblems/challengerEmblem.png"),
 }

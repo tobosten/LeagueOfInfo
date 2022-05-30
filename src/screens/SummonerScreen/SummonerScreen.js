@@ -91,6 +91,7 @@ const SummonerScreen = () => {
 
   function rankImage() {
     let img = rankEmblems[rankedStats.tier]
+    console.log(rankEmblems[rankedStats.tier]);
     return (
       <View>
         {rankedStats.tier == "Unranked" ? (
