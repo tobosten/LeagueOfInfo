@@ -38,6 +38,7 @@ const ChampSearch = ({ navigation }) => {
 
     const renderItem = ({ item }) => {
 
+
         return (
             <View style={{ width: 80, marginVertical: 5 }}>
                 <TouchableOpacity style={styles.renderItemButton} onPress={() => {
@@ -54,6 +55,7 @@ const ChampSearch = ({ navigation }) => {
                     />
                 </TouchableOpacity>
                 <Text style={styles.renderItemName}>{item.id}</Text>
+
             </View >
         )
     }
@@ -87,7 +89,6 @@ const ChampSearch = ({ navigation }) => {
     if (Dimensions.get("screen").width > 550) {
         numColumns = 6
     }
-    /* console.log(Dimensions.get("screen").width); */
 
     return (
         <View style={styles.mainContainer}>
@@ -132,6 +133,7 @@ const ChampSearch = ({ navigation }) => {
                     </View>
                 ) : (
                     <View>
+
                         <FlatList
                             data={search == true ? searchList : championList}
                             renderItem={renderItem}
@@ -144,7 +146,6 @@ const ChampSearch = ({ navigation }) => {
                             )}
                         />
                     </View>
-
                 )
                 }
             </View>
