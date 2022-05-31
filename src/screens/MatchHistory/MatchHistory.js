@@ -31,7 +31,6 @@ const MatchHistory = () => {
         ).then((resp) => {
             let data = resp.data
             let IDs = data
-            /* setIDs(data) */
             let matches1Objects = []
             setMatchesID(data)
             for (let i = 0; i < 10; i++) {
@@ -40,7 +39,6 @@ const MatchHistory = () => {
             }
             setBaseIDs(data)
             setMatches(matches1Objects)
-            console.log(IDs);
 
             setTimeout(() => {
                 axios.get(
@@ -160,7 +158,6 @@ const MatchHistory = () => {
 
         gameModes.forEach((value, index) => {
             if (value.gameMode == item.info.gameMode) {
-                /* console.log(("Hej")); */
                 gameMode = value.gameMode
                 if (value.gameMode == "CLASSIC") {
                     item.info.queueId == 400 ? gameMode = gameModes[index].gameMode : gameMode = "Ranked Solo"
@@ -270,7 +267,6 @@ const MatchHistory = () => {
                         </View>
                         <View style={{ alignItems: "center" }}>
                             <Image
-                                /* require(`../../assets/Runes/Domination/HailOfBlades/HailOfBlades.png`) */
                                 source={runeImages[runeIDs.primaryRunes.main]}
                                 style={{ height: 55, width: 55 }}
                             />
@@ -294,7 +290,7 @@ const MatchHistory = () => {
             ) : (
                 <View style={{ marginTop: 20 }}>
                     <FlatList
-                        data={matches/* .sort((a, b) => b.) */}
+                        data={matches}
                         renderItem={matchRender}
                         keyExtractor={(item, index) => index}
                         ListFooterComponent={() => {

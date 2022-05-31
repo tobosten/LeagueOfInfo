@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
         flex: 0.7,
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 50
     },
     loginContainer: {
         flex: 1.5,

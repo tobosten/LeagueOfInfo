@@ -9,6 +9,9 @@ import { useToast } from 'react-native-toast-notifications'
 import { ChampArrayContext } from '../../ProjectContext'
 import LoginButton from '../../components/LoginButton'
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import ModalDropdown from 'react-native-modal-dropdown';
+import ServerSelect from '../../components/ServerSelect'
+import { EndpointServerContext } from '../../ProjectContext'
 
 
 const LoginScreen = ({ navigation }) => {
@@ -20,6 +23,7 @@ const LoginScreen = ({ navigation }) => {
     const { userInfo, setUserInfo } = useContext(UserInfoContext)
     const { setMasteryArray } = useContext(MasteryArrayContext)
     const { setChampArray } = useContext(ChampArrayContext)
+    const { serverContext } = useContext(EndpointServerContext)
 
     /* used to display correct toast when no name */
     let findMe = 1
@@ -60,7 +64,7 @@ const LoginScreen = ({ navigation }) => {
         //fetch user
         if (value !== "") {
             storeData()
-            axios.get(`https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${value}?${constants.api_key}`)
+            axios.get(`https://${serverContext}/lol/summoner/v4/summoners/by-name/${value}?${constants.api_key}`)
                 .then((resp) => {
                     console.log(resp.data);
                     let id = resp.data.id
@@ -75,7 +79,7 @@ const LoginScreen = ({ navigation }) => {
                         }
                     )
                     axios.get(
-                        `https://euw1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${id}?${constants.api_key}`
+                        `https://${serverContext}/lol/champion-mastery/v4/champion-masteries/by-summoner/${id}?${constants.api_key}`
                     ).then((resp) => {
                         setMasteryArray(resp.data)
                         if (sumName != null) {
@@ -100,8 +104,7 @@ const LoginScreen = ({ navigation }) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: theme.darkBlue }}>
-            {/* choose which region? */}
-            <Text style={{ color: "white", marginLeft: 10 }}>EUW</Text>
+            <ServerSelect />
             <View style={styles.titleContainer}>
                 <Text style={{ color: "white", fontSize: 30 }}>League of Info</Text>
             </View>
@@ -136,7 +139,7 @@ const LoginScreen = ({ navigation }) => {
                     <Text style={{ color: "white", fontSize: 18 }}>Find me</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </View >
     )
 }
 

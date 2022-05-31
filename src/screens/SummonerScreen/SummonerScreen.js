@@ -9,6 +9,7 @@ import { rankEmblems } from '../../assets/rankEmblems';
 import { ChampArrayContext, MasteryArrayContext } from '../../ProjectContext';
 import ProfileLevelBorder from '../../components/ProfileLevelBorder';
 import MostPlayed from '../../components/MostPlayed';
+import { EndpointServerContext } from '../../ProjectContext';
 
 
 const SummonerScreen = () => {
@@ -16,6 +17,7 @@ const SummonerScreen = () => {
   const { userInfo } = useContext(UserInfoContext)
   const { champArray } = useContext(ChampArrayContext)
   const { masteryArray } = useContext(MasteryArrayContext)
+  const { serverContext} = useContext(EndpointServerContext)
   const [rankedStats, setRankedStats] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
 
@@ -23,7 +25,7 @@ const SummonerScreen = () => {
     if (isLoading == true) {
       if (userInfo != null) {
         axios.get(
-          `https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${userInfo.id}?${constants.api_key}`
+          `https://${serverContext}/lol/league/v4/entries/by-summoner/${userInfo.id}?${constants.api_key}`
         ).then((resp) => {
           console.log("User Stats:", resp.data[0]);
           let data = resp.data[0]
