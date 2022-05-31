@@ -136,7 +136,7 @@ const LoginScreen = ({ navigation }) => {
                 <TouchableOpacity style={styles.loginButton} onPress={() => {
                     login(sumName, findMe)
                 }}>
-                    <Text style={{ color: "white", fontSize: 18 }}>Find me</Text>
+                    <Text style={{ color: "white", fontSize: 18 }}>Search</Text>
                 </TouchableOpacity>
             </View>
         </View >
