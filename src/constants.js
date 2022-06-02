@@ -1,7 +1,7 @@
 
 
 export const constants = {
-    api_key: `api_key=RGAPI-eb43ac7b-7965-44a6-b282-549eee8e4079`,
+    api_key: `api_key=RGAPI-c5c92526-f98d-4fab-bef1-f635100f9619`,
 
     masteryTitles: [
         {
