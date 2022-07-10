@@ -1,4 +1,4 @@
 # LeagueOfInfo
 
-API Key only lasts 24 hours. 
+Need to add your own API key from https://developer.riotgames.com/
 
